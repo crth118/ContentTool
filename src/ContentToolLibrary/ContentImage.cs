@@ -5,13 +5,6 @@ namespace ContentToolLibrary
 {
     public class ContentImage
     {
-        public enum ContentImageType
-        {
-            TFT,
-            U2,
-            U3
-        }
-
         public ContentImageType ImageType { get; set; }
         public string Name { get; set; }
         public string FullPath { get; set; }

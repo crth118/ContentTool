@@ -8,7 +8,8 @@ using ImageMagick;
 namespace ContentToolLibrary
 {
     /// <summary>
-    /// Class that allows the import of current content file, and new content images that will generate the new build.
+    /// Performs the import of current content file, and new content images that will generate the new content build.
+    /// Current content file and new images are defined by the user, by placing in a specific directory.
     /// </summary>
     public class ContentImporter
     {
@@ -40,17 +41,17 @@ namespace ContentToolLibrary
 
                     if (IsTFTImage(height, width))
                     {
-                        imageList.Add(new ContentImage(ContentImage.ContentImageType.TFT, file.Name, file.FullName));
+                        imageList.Add(new ContentImage(ContentImageType.TFT, file.Name, file.FullName));
                     }
 
                     if (IsU2Image(height, width))
                     {
-                        imageList.Add(new ContentImage(ContentImage.ContentImageType.U2, file.Name, file.FullName));
+                        imageList.Add(new ContentImage(ContentImageType.U2, file.Name, file.FullName));
                     }
 
                     if (IsU3Image(height, width))
                     {
-                        imageList.Add(new ContentImage(ContentImage.ContentImageType.U3, file.Name, file.FullName));
+                        imageList.Add(new ContentImage(ContentImageType.U3, file.Name, file.FullName));
                     }
                 }
             }
