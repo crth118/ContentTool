@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<installedApplications>
+	<version customer="IGT" skin="v2_base_1.07.05_4.2.2"/>
+	<application name="Point Explosion Award" active="true" trigger="0xB9" url="screenPointExplosion2UpAward.swf" menuOption="option4" menuVisible="false" menuIcons="false" />
+	<application name="Point Explosion Progress" active="true" trigger="0xBA" url="screenPointExplosion2UpProgress.swf" menuOption="option4" menuVisible="false" menuIcons="false" />
+</installedApplications>

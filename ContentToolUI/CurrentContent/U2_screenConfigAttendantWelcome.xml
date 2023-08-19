@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<screen>
+    <timeConfig>
+        <time name="TimeLocation" x="53.8" y="-59.75"/>
+        <time name="TimeFill" fillColour="0x000000" fillAlpha="25"/>
+        <time name="TimeFont" font="Verlag Book" fontColour="0xffffff" fontSize="12" fontAlign="left" fontBold="false" fontItalics="false"/>
+    </timeConfig>
+    <buttonConfig>
+        <button name="Menu" visible="true" x="-69.1" y="564.95"/>
+        <button name="Help" visible="false" x="-100" y="-100"/>
+        <button name="Exit" visible="false" x="-100" y="-100"/>
+        <button name="Calendar" visible="false" x="-100" y="-100"/>
+    </buttonConfig>
+</screen>

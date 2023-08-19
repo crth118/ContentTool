@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<menuConfig>
+<menuScreens mode="popUp">
+<default menuOption="option3" />
+<option1Catcher menuOption="option1" />
+<option2Catcher menuOption="option2" />
+<option3Catcher menuOption="option3" />
+<option4Catcher menuOption="option4" />
+<U2_screenSession menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenAbandonedCard menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenAccountSummary menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenAlternateSession menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenAnniversary menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenBadCard menuOption="option3" visible="true" drinkMenu="false"/>
+<U2_screenCardIn menuOption="option3" visible="true" drinkMenu="false"/>
+<U2_screenCardInWelcome menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenCardOut menuOption="option3" visible="true" drinkMenu="false"/>
+<U2_screenCommsDown menuOption="option3" visible="true" drinkMenu="false"/>
+<U2_screenGenericMenu menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenHandPay menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenHappyBirthday menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenJackpot menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenMessageScreen menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenPinInfo menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenPinEntry menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenPinInvalid menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenPinDisabled menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenPointPlay menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenPointPlayConfirm menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenPointsEarningDisabled menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenPPCLimitReached menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenReserveGame menuOption="option3" visible="true" drinkMenu="false"/>
+<U2_screenReserveGameComplete menuOption="option3" visible="true" drinkMenu="false"/>
+<U2_screenReserveGameCountdown menuOption="option3" visible="true" drinkMenu="false"/>
+<U2_screenReserveGameWelcomeBack menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenVipScreen menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenXtraCredit menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenXtraCreditExit menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenXtraCreditReminder menuOption="option4" visible="true" drinkMenu="false"/>
+<U2_screenIdleAttractLoop menuOption="option3" visible="true" drinkMenu="false"/>
+<U2_screenBusyAttractLoop menuOption="option3" visible="true" drinkMenu="false"/>
+<U3_screenSession menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenAbandonedCard menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenAccountSummary menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenAlternateSession menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenAnniversary menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenBadCard menuOption="option3" visible="true" drinkMenu="false"/>
+<U3_screenCardIn menuOption="option3" visible="true" drinkMenu="false"/>
+<U3_screenCardInWelcome menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenCardOut menuOption="option3" visible="true" drinkMenu="false"/>
+<U3_screenCommsDown menuOption="option3" visible="true" drinkMenu="false"/>
+<U3_screenGenericMenu menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenHandPay menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenHappyBirthday menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenJackpot menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenMessageScreen menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenPinInfo menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenPinEntry menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenPinInvalid menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenPinDisabled menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenPointPlay menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenPointPlayConfirm menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenPointsEarningDisabled menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenPPCLimitReached menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenReserveGame menuOption="option3" visible="true" drinkMenu="false"/>
+<U3_screenReserveGameComplete menuOption="option3" visible="true" drinkMenu="false"/>
+<U3_screenReserveGameCountdown menuOption="option3" visible="true" drinkMenu="false"/>
+<U3_screenReserveGameWelcomeBack menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenVipScreen menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenXtraCredit menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenXtraCreditExit menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenXtraCreditReminder menuOption="option4" visible="true" drinkMenu="false"/>
+<U3_screenIdleAttractLoop menuOption="option3" visible="true" drinkMenu="false"/>
+<U3_screenBusyAttractLoop menuOption="option3" visible="true" drinkMenu="false"/>
+</menuScreens>
+<menuIcon>
+<menuIconDrinks visible="true" />
+<menuIconService visible="true"/>
+</menuIcon>
+</menuConfig>

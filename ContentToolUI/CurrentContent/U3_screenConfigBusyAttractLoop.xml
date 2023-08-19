@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<screen>
+	<timeConfig>
+        <time name="TimeLocation" x="124.85" y="-60.7"/>
+        <time name="TimeFill" fillColour="0x000000" fillAlpha="25"/>
+        <time name="TimeFont" font="Verlag Book" fontColour="0xffffff" fontSize="14" fontAlign="left" fontBold="false" fontItalics="false"/>
+    </timeConfig>
+    <tokenConfig>
+    </tokenConfig>
+    <buttonConfig>
+        <button name="Menu" visible="true" x="-60" y="971"/>
+        <button name="Help" visible="false" x="-100" y="-100"/>
+        <button name="Exit" visible="false" x="-100" y="-100"/>
+        <button name="Calendar" visible="false" x="-100" y="-100"/>
+        <button name="GenericMenuOption1" visible="false" x="-100" y="-100"/>
+        <button name="GenericMenuOption2" visible="false" x="-100" y="-100"/>
+        <button name="GenericMenuOption3" visible="false" x="-100" y="-100"/>
+        <button name="MoreOptions" visible="false" x="-100" y="-100"/>
+        <button name="Go Back" visible="false" x="-100" y="-100"/>
+        <button name="PINButton1" visible="false" x="-100" y="-100"/>
+        <button name="PINButton2" visible="false" x="-100" y="-100"/>
+        <button name="PINButton3" visible="false" x="-100" y="-100"/>
+        <button name="PINButton4" visible="false" x="-100" y="-100"/>
+        <button name="PINButton5" visible="false" x="-100" y="-100"/>
+        <button name="PINButton6" visible="false" x="-100" y="-100"/>
+        <button name="PINButton7" visible="false" x="-100" y="-100"/>
+        <button name="PINButton8" visible="false" x="-100" y="-100"/>
+        <button name="PINButton9" visible="false" x="-100" y="-100"/>
+        <button name="PINButton0" visible="false" x="-100" y="-100"/>
+        <button name="PINEnterBtn" visible="false" x="-100" y="-100"/>
+        <button name="PINCancelBtn" visible="false" x="-100" y="-100"/>
+        <button name="GenericPPOption1" visible="false" x="-100" y="-100"/>
+        <button name="GenericPPOption2" visible="false" x="-100" y="-100"/>
+        <button name="GenericPPOption3" visible="false" x="-100" y="-100"/>
+        <button name="GenericPPOption4" visible="false" x="-100" y="-100"/>
+        <button name="GenericPPOption5" visible="false" x="-100" y="-100"/>
+        <button name="GenericPPOption6" visible="false" x="-100" y="-100"/>
+        <button name="GenericPPOption7" visible="false" x="-100" y="-100"/>
+        <button name="GenericPPOption8" visible="false" x="-100" y="-100"/>
+        <button name="PPButtonConfirm" visible="false" x="-100" y="-100"/>
+        <button name="PPButtonCancel" visible="false" x="-100" y="-100"/>
+        <button name="OK" visible="false" x="-100" y="-100"/>
+        <button name="Unlock" visible="false" x="-100" y="-100"/>
+        <button name="HidePoints" visible="false" x="-100" y="-100"/>
+        <button name="ShowPoints" visible="false" x="-100" y="-100"/>
+        <button name="Enter" visible="false" x="-100" y="-100"/>
+    </buttonConfig>
+    <buttonLabelConfig>
+    </buttonLabelConfig>
+    <attractConfig>
+        <largeSessionAttract useSkin="true" playListPath="playList_U3_busyAttract.xml"/>
+    </attractConfig>
+</screen>

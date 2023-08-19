@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<playList useNumberedJpgs="false" >
+<content path = "U3_Insert.jpg" width = "256" height="1024" tween="fade" duration="00.08"/>
+<content path = "U3_Step1.jpg" width = "256" height="1024" tween="fade" duration="00.08"/>
+<content path = "U3_Step2.jpg" width = "256" height="1024" tween="fade" duration="00.08"/>
+<content path = "U3_Step3.jpg" width = "256" height="1024" tween="fade" duration="00.08"/>
+<content path = "VP190069_CookBeaumont_PubPerks_RobinHood_Benefits_UGA3_HR.jpg" width = "256" height="1024" tween="fade" duration="00.08"/>
+<content path = "VP190069_CookBeaumont_PubPerks_RobinHood_Join_UGA3_HR.jpg" width = "256" height="1024" tween="fade" duration="00.08"/>
+<content path = "VP190069_CookBeaumont_PubPerks_RobinHood_Points_UGA3_HR.jpg" width = "256" height="1024" tween="fade" duration="00.08"/>
+</playList>
