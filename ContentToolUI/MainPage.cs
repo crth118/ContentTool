@@ -96,22 +96,71 @@ namespace ContentToolUI
 
         private TextBox CreateImageInfoImageStartDateTextBox(int index)
         {
-            return new TextBox()
+            var box = new TextBox()
             {
                 Name = "imageStartDateTb" + index,
                 ReadOnly = true,
                 BackColor = Color.DarkGray
             };
+
+            box.TextChanged += (sender, e) =>
+            {
+                var validate = new ValidationService();
+
+                if (!validate.IsValidDate(box.Text))
+                {
+                    box.BackColor = Color.Red;
+                }
+                else
+                {
+                    box.BackColor = Color.LightGreen;
+                }
+            };
+
+            box.MouseHover += (sender, e) =>
+            {
+                if (box.BackColor == Color.Red)
+                {
+                    toolTip1.SetToolTip(box, "Invalid date");
+                }
+                else
+                {
+                    toolTip1.SetToolTip(box, "Set start date for this content image");
+                }
+            };
+
+            return box;
+        }
+
+        private void Box_MouseHover(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private TextBox CreateImageInfoImageStopDateTextBox(int index)
         {
-            return new TextBox()
+            var box = new TextBox()
             {
                 Name = "imageStopDateTb" + index,
                 ReadOnly = true,
                 BackColor = Color.DarkGray
             };
+
+            box.TextChanged += (sender, e) =>
+            {
+                var validate = new ValidationService();
+
+                if (!validate.IsValidDate(box.Text))
+                {
+                    box.BackColor = Color.Red;
+                }
+                else
+                {
+                    box.BackColor = Color.LightGreen;
+                }
+            };
+
+            return box;
         }
 
         private CheckBox CreateImageInfoTurnOnDatesToggleButon(int index)
@@ -130,7 +179,7 @@ namespace ContentToolUI
             {
                 var startDateName = "imageStartDateTb" + index;
                 var stopDateName = "imageStopDateTb" + index;
-                              
+
                 TextBox startDate = Controls.Find(startDateName, true).FirstOrDefault() as TextBox;
                 TextBox stopDate = Controls.Find(stopDateName, true).FirstOrDefault() as TextBox;
 

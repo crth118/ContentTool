@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             mainContainer = new FlowLayoutPanel();
             headerContainer = new FlowLayoutPanel();
             currentContentLabel = new Label();
@@ -36,6 +37,7 @@
             newImagesPath = new TextBox();
             loadImagesButton = new Button();
             tftImageContainer = new FlowLayoutPanel();
+            toolTip1 = new ToolTip(components);
             mainContainer.SuspendLayout();
             headerContainer.SuspendLayout();
             SuspendLayout();
@@ -143,5 +145,6 @@
         private TextBox newImagesPath;
         private Button loadImagesButton;
         private FlowLayoutPanel tftImageContainer;
+        private ToolTip toolTip1;
     }
 }
