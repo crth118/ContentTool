@@ -32,9 +32,9 @@ namespace ContentToolUI
         {
             var images = Importer.GetAllImages();
 
+            int index = 0;
             foreach (var image in images)
             {
-                int index = 0;
                 CreateImageInfoLine(index, image);
                 index++;
             }
@@ -116,7 +116,7 @@ namespace ContentToolUI
 
         private CheckBox CreateImageInfoTurnOnDatesToggleButon(int index)
         {
-            return new CheckBox()
+            var checkbox = new CheckBox()
             {
                 Name = "imageTurnDatesOnTb" + index,
                 Text = "Use Dates:",
@@ -125,6 +125,36 @@ namespace ContentToolUI
                 CheckAlign = ContentAlignment.MiddleRight,
                 Padding = new Padding(20, 4, 0, 0)
             };
+
+            checkbox.Click += (sender, e) =>
+            {
+                var startDateName = "imageStartDateTb" + index;
+                var stopDateName = "imageStopDateTb" + index;
+                              
+                TextBox startDate = Controls.Find(startDateName, true).FirstOrDefault() as TextBox;
+                TextBox stopDate = Controls.Find(stopDateName, true).FirstOrDefault() as TextBox;
+
+                if (checkbox.Checked)
+                {
+                    startDate.BackColor = Color.White;
+                    startDate.ReadOnly = false;
+
+                    stopDate.BackColor = Color.White;
+                    stopDate.ReadOnly = false;
+                }
+                else
+                {
+                    startDate.BackColor = Color.DarkGray;
+                    startDate.ReadOnly = true;
+                    startDate.Text = null;
+
+                    stopDate.BackColor = Color.DarkGray;
+                    stopDate.ReadOnly = true;
+                    stopDate.Text = null;
+                }
+            };
+
+            return checkbox;
         }
 
         private CheckBox CreateImageInfoDoNotUseToggleButton(int index)
