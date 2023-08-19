@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
@@ -31,6 +32,12 @@ namespace ContentToolLibrary.Models
             
                 [XmlAttribute(AttributeName = "duration")]
                 public string? Duration { get; set; }
+                
+                [XmlAttribute(AttributeName = "startDate")]
+                public string? StartDate { get; set; }
+                
+                [XmlAttribute(AttributeName = "stopDate")]
+                public string? StopDate { get; set; }
             }
         }
     }
