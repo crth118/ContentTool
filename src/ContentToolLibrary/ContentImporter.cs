@@ -61,17 +61,17 @@ namespace ContentToolLibrary
 
         private bool IsTFTImage(int imageHeight, int imageWidth)
         {
-            return imageHeight == Resolutions["TFT Height"] && imageWidth == Resolutions["TFT Height"];
+            return imageHeight == Resolutions["TFT Height"] && imageWidth == Resolutions["TFT Width"];
         }
         
         private bool IsU2Image(int imageHeight, int imageWidth)
         {
-            return imageHeight == Resolutions["U2 Height"] && imageWidth == Resolutions["U2 Height"];
+            return imageHeight == Resolutions["U2 Height"] && imageWidth == Resolutions["U2 Width"];
         }
         
         private bool IsU3Image(int imageHeight, int imageWidth)
         {
-            return imageHeight == Resolutions["U3 Height"] && imageWidth == Resolutions["U3 Height"];
+            return imageHeight == Resolutions["U3 Height"] && imageWidth == Resolutions["U3 Width"];
         }
 
         private Dictionary<string, int> SetResolutionsDictionary()
@@ -82,7 +82,7 @@ namespace ContentToolLibrary
             resolutions.Add("U2 Width", 160);
             resolutions.Add("U2 Height", 600);
             resolutions.Add("U3 Width", 256);
-            resolutions.Add("U3 Width", 1024);
+            resolutions.Add("U3 Height", 1024);
 
             return resolutions;
         }
