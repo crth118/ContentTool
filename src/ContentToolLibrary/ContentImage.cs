@@ -8,7 +8,7 @@ namespace ContentToolLibrary
         public ContentImageType ImageType { get; set; }
         public string Name { get; set; }
         public string FullPath { get; set; }
-        public int Duration { get; set; }
+        public string Duration { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? StopDate { get; set; }
         public bool Use { get; set; } = true;
