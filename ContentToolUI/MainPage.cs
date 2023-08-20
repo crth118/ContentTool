@@ -200,7 +200,7 @@ namespace ContentToolUI
         {
             var checkbox = new CheckBox()
             {
-                Name = "imageTurnDatesOnTb" + index,
+                Name = "imageTurnDatesOnCb" + index,
                 Text = "Use Dates:",
                 TextAlign = ContentAlignment.MiddleRight,
                 AutoSize = true,
@@ -260,25 +260,24 @@ namespace ContentToolUI
         private void createContentBuildButton_Click(object sender, EventArgs e)
         {
             var filehandler = new FileHandler();
+            var workspaceSbnexgen = $"{filehandler.WorkSpace}/sbnexgen2";
             
-            // Copy current sbnexgen to workspace dir
-            var workspace = filehandler.WorkSpace;
-            filehandler.CopyDirectory(currentContentPath.Text, workspace, true);
+            // Copy current content to from contents ./workspace/sbnexgen2
+            filehandler.CopyDirectory(currentContentPath.Text, workspaceSbnexgen, false);
             
             // Copy new images into new sbnexgen2
-            var sbnexgen = $"{workspace}/sbnexgen2";
-            filehandler.CopyDirectory(newImagesPath.Text, sbnexgen, false);
+            filehandler.CopyDirectory(newImagesPath.Text, workspaceSbnexgen, false);
             
-            // Compress images
-            var files = new DirectoryInfo(sbnexgen).GetFiles("*jpg");
+            // Compress images in the new build inside .\workspace
+            var files = new DirectoryInfo(workspaceSbnexgen).GetFiles("*.jpg");
             foreach (var file in files)
             {
                 ImageCompressor.CompressImage(file.FullName);
             }
             
-            
             var images = Importer.GetAllImages();
-
+            
+            // Count images from current content and new images that will make up the new build
             int tftImageCount = -1;
             int u2ImageCount = -1;
             int u3ImageCount = -1;
@@ -298,42 +297,69 @@ namespace ContentToolUI
                         break;
                 }
             }
+
+            var tftPlaylist = CreatePlaylistModel(tftImageCount, ContentImageType.TFT);
+            var u2Playlist = CreatePlaylistModel(u2ImageCount, ContentImageType.U2);
+            var u3Playlist = CreatePlaylistModel(u3ImageCount, ContentImageType.U3);
             
+            GenerateImageTypePlaylists(ContentImageType.TFT, workspaceSbnexgen, tftPlaylist);
+            GenerateImageTypePlaylists(ContentImageType.U2, workspaceSbnexgen, u2Playlist);
+            GenerateImageTypePlaylists(ContentImageType.U3, workspaceSbnexgen, u3Playlist);
+        }
+
+        /// <summary>
+        /// Creates the two playlist types (busyAttract and idleAttract) for the specified image type.
+        /// </summary>
+        private void GenerateImageTypePlaylists(ContentImageType imageType, string destination, XMLPlaylistModel.Playlist playlist)
+        {
+            var xml = new XmlSerializationService();
+            var busyAttract = $"{destination}/playList_{imageType}_busyAttract.xml";
+            var idleAttract = $"{destination}/playList_{imageType}_idleAttract.xml";
+            
+            xml.WriteToXmlFile(busyAttract, playlist, false);
+            xml.WriteToXmlFile(idleAttract, playlist, false);
+        }
+
+        private XMLPlaylistModel.Playlist CreatePlaylistModel(int imageCount, ContentImageType imageType)
+        {
             var content = new List<XMLPlaylistModel.Playlist.PlaylistContent>();
-            for (int i = 0; i <= tftImageCount; i++)
+
+            for (int i = 0; i <= imageCount; i++)
             {
+                var deleteImage = Controls.Find($"doNotUseImageTb{i}", true).First() as CheckBox;
+
+                if (deleteImage.Checked)
+                {
+                    continue;
+                }
+                
                 var imgName = Controls.Find($"imageNameTb{i}", true).First().Text;
                 var duration = Controls.Find($"imageDurationTb{i}", true).First().Text;
-                var height = 240;
-                var width = 640;
-                string startDate;
-                string stopDate;
-                
-                var useDates = Controls.Find($"imageTurnDatesOnTb{i}", true).First() as CheckBox;
-                if (useDates.Checked)
-                {
-                    startDate = Controls.Find($"imageStartDate{i}", true).First().Text;
-                    stopDate = Controls.Find($"imageStopDate{i}", true).First().Text;
-                }
+                var height = Importer.Resolutions[$"{imageType} Height"];
+                var width = Importer.Resolutions[$"{imageType} Width"];
 
-                var image = new XMLPlaylistModel.Playlist.PlaylistContent()
+                var xmlEntry = new XMLPlaylistModel.Playlist.PlaylistContent()
                 {
                     Path = imgName,
                     Duration = duration,
-                    Height = 240,
-                    Width = 640,
-                    StartDate = null,
-                    StopDate = null,
+                    Height = height,
+                    Width = width,
                 };
-
-                content.Add(image);
+                
+                var useDates = Controls.Find($"imageTurnDatesOnCb{i}", true).First() as CheckBox;
+                if (useDates.Checked)
+                {
+                    xmlEntry.StartDate = Controls.Find($"imageStartDateTb{i}", true).First().Text;
+                    xmlEntry.StopDate = Controls.Find($"imageStopDateTb{i}", true).First().Text;
+                }
+                
+                content.Add(xmlEntry);
             }
 
             var playlist = new XMLPlaylistModel.Playlist();
             playlist.Content = content;
-            
-            var xml = new XmlSerializationService();
-            xml.WriteToXmlFile("C:\\Users\\BMadd\\OneDrive\\Documents\\Test\\playlist.xml", playlist, false);
+
+            return playlist;
         }
     }
 }
