@@ -5,10 +5,10 @@ namespace ContentToolUI
 {
     public partial class MainPage : Form
     {
-        public ContentImporter Importer;
+        private readonly ContentImporter _importer;
         public MainPage()
         {
-            Importer = new ContentImporter();
+            _importer = new ContentImporter();
 
             InitializeComponent();
             //// Color Scheme
@@ -25,8 +25,8 @@ namespace ContentToolUI
 
         private void MainPage_Load(object sender, EventArgs e)
         {
-            currentContentPath.Text = Importer.CurrentContentPath;
-            newImagesPath.Text = Importer.NewImagesPath;
+            currentContentPath.Text = _importer.CurrentContentPath;
+            newImagesPath.Text = _importer.NewImagesPath;
         }
 
         private void loadImagesButton_Click(object sender, EventArgs e)
@@ -37,7 +37,7 @@ namespace ContentToolUI
             u2ImageContainer.SuspendLayout();
             u3ImageContainer.SuspendLayout();
 
-            var images = Importer.GetAllImages();
+            var images = _importer.GetAllImages();
 
             int index = 0;
             foreach (var image in images)
@@ -275,7 +275,7 @@ namespace ContentToolUI
                 ImageCompressor.CompressImage(file.FullName);
             }
             
-            var images = Importer.GetAllImages();
+            var images = _importer.GetAllImages();
             
             // Count images from current content and new images that will make up the new build
             int tftImageCount = -1;
@@ -327,16 +327,17 @@ namespace ContentToolUI
             for (int i = 0; i <= imageCount; i++)
             {
                 var deleteImage = Controls.Find($"doNotUseImageTb{i}", true).First() as CheckBox;
-
-                if (deleteImage.Checked)
+                var imageTypeTextBox = Controls.Find($"imageTypeTb{i}", true).First().Text;
+                
+                if (deleteImage.Checked || imageTypeTextBox != imageType.ToString())
                 {
                     continue;
                 }
                 
                 var imgName = Controls.Find($"imageNameTb{i}", true).First().Text;
                 var duration = Controls.Find($"imageDurationTb{i}", true).First().Text;
-                var height = Importer.Resolutions[$"{imageType} Height"];
-                var width = Importer.Resolutions[$"{imageType} Width"];
+                var height = _importer.Resolutions[$"{imageType} Height"];
+                var width = _importer.Resolutions[$"{imageType} Width"];
 
                 var xmlEntry = new XMLPlaylistModel.Playlist.PlaylistContent()
                 {
