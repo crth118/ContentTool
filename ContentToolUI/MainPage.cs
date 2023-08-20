@@ -282,6 +282,7 @@ namespace ContentToolUI
 
         private void createContentBuildButton_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             var filehandler = new FileHandler();
             var workspaceSbnexgen = $"{filehandler.WorkSpace}/sbnexgen2";
             
@@ -328,6 +329,13 @@ namespace ContentToolUI
             GenerateImageTypePlaylists(ContentImageType.TFT, workspaceSbnexgen, tftPlaylist);
             GenerateImageTypePlaylists(ContentImageType.U2, workspaceSbnexgen, u2Playlist);
             GenerateImageTypePlaylists(ContentImageType.U3, workspaceSbnexgen, u3Playlist);
+
+            var outputPath = "C:\\Users\\BMadd\\OneDrive\\Documents\\Test";
+            filehandler.SplitBuildIntoArtAndSnd(workspaceSbnexgen);
+            filehandler.ZipNewBuild(outputPath);
+            
+            Cursor = Cursors.Default;
+            MessageBox.Show($"Build complete.\nSaved to: {outputPath}");
         }
 
         /// <summary>
