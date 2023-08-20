@@ -259,7 +259,50 @@ namespace ContentToolUI
 
         private void createContentBuildButton_Click(object sender, EventArgs e)
         {
-           
+            var filehandler = new FileHandler();
+            
+            // Copy current sbnexgen to workspace dir
+            var workspace = filehandler.WorkSpace;
+            filehandler.CopyDirectory(currentContentPath.Text, workspace, true);
+            
+            // Copy new images into new sbnexgen2
+            var sbnexgen = $"{workspace}/sbnexgen2";
+            filehandler.CopyDirectory(newImagesPath.Text, workspace, false);
+            
+            // Compress images
+            var files = new DirectoryInfo(sbnexgen).GetFiles("*jpg");
+            foreach (var file in files)
+            {
+                ImageCompressor.CompressImage(file.FullName);
+            }
+            
+            
+            var images = Importer.GetAllImages();
+
+            int tftImageCount = -1;
+            int u2ImageCount = -1;
+            int u3ImageCount = -1;
+
+            foreach (var image in images)
+            {
+                switch (image.ImageType)
+                {
+                    case ContentImageType.TFT:
+                        tftImageCount++;
+                        break;
+                    case ContentImageType.U2:
+                        u2ImageCount++;
+                        break;
+                    case ContentImageType.U3:
+                        u3ImageCount++;
+                        break;
+                }
+            }
+
+            for (int i = 0; i <= tftImageCount; i++)
+            {
+                var imgName = 
+            }
         }
     }
 }

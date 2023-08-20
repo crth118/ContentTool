@@ -10,14 +10,14 @@ namespace ContentToolLibrary
     /// </summary>
     public class FileHandler
     {
-        private readonly string _workspacePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Workspace");
+        public readonly string WorkSpace = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Workspace");
         private readonly string _artDirPath;
         private readonly string _sndDirPath;
 
         public FileHandler()
         {
-            _artDirPath = $"{_workspacePath}/Art";
-            _sndDirPath = $"{_workspacePath}/Snd";
+            _artDirPath = $"{WorkSpace}/Art";
+            _sndDirPath = $"{WorkSpace}/Snd";
         }
         
         
