@@ -11,7 +11,7 @@ namespace ContentToolUI
             Importer = new ContentImporter();
 
             InitializeComponent();
-            // Color Scheme
+            //// Color Scheme
             // Header Container
             //
             currentContentLabel.ForeColor = ColorScheme.Text;
@@ -20,6 +20,7 @@ namespace ContentToolUI
             newImagesPath.ForeColor = ColorScheme.Text;
             //
             ////
+            // Containers
         }
 
         private void MainPage_Load(object sender, EventArgs e)
@@ -30,19 +31,46 @@ namespace ContentToolUI
 
         private void loadImagesButton_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
+
+            tftImageContainer.SuspendLayout();
+            u2ImageContainer.SuspendLayout();
+            u3ImageContainer.SuspendLayout();
+
             var images = Importer.GetAllImages();
 
             int index = 0;
             foreach (var image in images)
             {
-                CreateImageInfoLine(index, image);
+                switch (image.ImageType)
+                {
+                    case ContentImageType.TFT:
+                        CreateImageInfoLine(index, image, tftImageContainer);
+                        break;
+                    case ContentImageType.U2:
+                        CreateImageInfoLine(index, image, u2ImageContainer);
+                        break;
+                    case ContentImageType.U3:
+                        CreateImageInfoLine(index, image, u3ImageContainer);
+                        break;
+                }
+
                 index++;
             }
+
+            tftImageContainer.ResumeLayout();
+            u2ImageContainer.ResumeLayout();
+            u3ImageContainer.ResumeLayout();
+            Cursor = Cursors.Default;
+
+            loadImagesButton.Enabled = false;
+            refreshButton.Enabled = true;
+            createContentBuildButton.Enabled = true;
         }
 
-        private void CreateImageInfoLine(int index, ContentImage image)
+        private void CreateImageInfoLine(int index, ContentImage image, FlowLayoutPanel imageTypeContainer)
         {
-            var container = new FlowLayoutPanel()
+            var lineContainer = new FlowLayoutPanel()
             {
                 Name = "imageLineContainer" + index,
                 AutoSize = false,
@@ -50,15 +78,15 @@ namespace ContentToolUI
                 Visible = true,
             };
 
-            container.Controls.Add(CreateImageInfoImageTypeBox(index, image));
-            container.Controls.Add(CreateImageInfoImageNameTextBox(index, image));
-            container.Controls.Add(CreateImageInfoImageDurationTextBox(index, image));
-            container.Controls.Add(CreateImageInfoTurnOnDatesToggleButon(index));
-            container.Controls.Add(CreateImageInfoImageStartDateTextBox(index));
-            container.Controls.Add(CreateImageInfoImageStopDateTextBox(index));
-            container.Controls.Add(CreateImageInfoDoNotUseToggleButton(index));
+            lineContainer.Controls.Add(CreateImageInfoImageTypeBox(index, image));
+            lineContainer.Controls.Add(CreateImageInfoImageNameTextBox(index, image));
+            lineContainer.Controls.Add(CreateImageInfoImageDurationTextBox(index, image));
+            lineContainer.Controls.Add(CreateImageInfoTurnOnDatesToggleButon(index));
+            lineContainer.Controls.Add(CreateImageInfoImageStartDateTextBox(index));
+            lineContainer.Controls.Add(CreateImageInfoImageStopDateTextBox(index));
+            lineContainer.Controls.Add(CreateImageInfoDoNotUseToggleButton(index));
 
-            tftImageContainer.Controls.Add(container);
+            imageTypeContainer.Controls.Add(lineContainer);
         }
 
         private TextBox CreateImageInfoImageTypeBox(int index, ContentImage image)
@@ -119,22 +147,22 @@ namespace ContentToolUI
 
             box.MouseHover += (sender, e) =>
             {
-                if (box.BackColor == Color.Red)
-                {
-                    toolTip1.SetToolTip(box, "Invalid date");
-                }
-                else
-                {
-                    toolTip1.SetToolTip(box, "Set start date for this content image");
-                }
+                datesTextBox_Hover(sender, e, box);
             };
 
             return box;
         }
 
-        private void Box_MouseHover(object? sender, EventArgs e)
+        private void datesTextBox_Hover(object sender, EventArgs e, TextBox box)
         {
-            throw new NotImplementedException();
+            if (box.BackColor == Color.Red)
+            {
+                toolTip1.SetToolTip(box, "Warning: Invalid date");
+            }
+            else
+            {
+                toolTip1.SetToolTip(box, "Set start date for this content image");
+            }
         }
 
         private TextBox CreateImageInfoImageStopDateTextBox(int index)
@@ -158,6 +186,11 @@ namespace ContentToolUI
                 {
                     box.BackColor = Color.LightGreen;
                 }
+            };
+
+            box.MouseHover += (sender, e) =>
+            {
+                datesTextBox_Hover(sender, e, box);
             };
 
             return box;
@@ -195,11 +228,9 @@ namespace ContentToolUI
                 {
                     startDate.BackColor = Color.DarkGray;
                     startDate.ReadOnly = true;
-                    startDate.Text = null;
 
                     stopDate.BackColor = Color.DarkGray;
                     stopDate.ReadOnly = true;
-                    stopDate.Text = null;
                 }
             };
 
@@ -217,6 +248,18 @@ namespace ContentToolUI
                 CheckAlign = ContentAlignment.MiddleRight,
                 Padding = new Padding(40, 4, 0, 0)
             };
+        }
+
+        private void refreshButton_Click(object sender, EventArgs e)
+        {
+            Controls.Clear();
+            InitializeComponent();
+            MainPage_Load(sender, e);
+        }
+
+        private void createContentBuildButton_Click(object sender, EventArgs e)
+        {
+           
         }
     }
 }
