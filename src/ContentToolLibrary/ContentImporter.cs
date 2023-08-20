@@ -14,7 +14,7 @@ namespace ContentToolLibrary
     public class ContentImporter
     {
         // Default ContentPath
-        public string CurrentContentPath { get; set; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CurrentContent");
+        public string CurrentContentPath { get; set; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CurrentContent/sbnexgen2");
         public string NewImagesPath { get; set; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NewImages");
         private Dictionary<string, int> Resolutions { get; set; }
 

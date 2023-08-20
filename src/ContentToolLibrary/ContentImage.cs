@@ -9,8 +9,10 @@ namespace ContentToolLibrary
         public string Name { get; set; }
         public string FullPath { get; set; }
         public string Duration { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? StopDate { get; set; }
+        public int? Height { get; set; }
+        public int? Width { get; set; }
+        public string? StartDate { get; set; }
+        public string? StopDate { get; set; }
         public bool Use { get; set; } = true;
 
         public ContentImage(ContentImageType imageType, string name, string fullPath)

@@ -1,5 +1,5 @@
 using ContentToolLibrary;
-using System.Security.Cryptography.X509Certificates;
+using ContentToolLibrary.Models;
 
 namespace ContentToolUI
 {
@@ -267,7 +267,7 @@ namespace ContentToolUI
             
             // Copy new images into new sbnexgen2
             var sbnexgen = $"{workspace}/sbnexgen2";
-            filehandler.CopyDirectory(newImagesPath.Text, workspace, false);
+            filehandler.CopyDirectory(newImagesPath.Text, sbnexgen, false);
             
             // Compress images
             var files = new DirectoryInfo(sbnexgen).GetFiles("*jpg");
@@ -298,11 +298,42 @@ namespace ContentToolUI
                         break;
                 }
             }
-
+            
+            var content = new List<XMLPlaylistModel.Playlist.PlaylistContent>();
             for (int i = 0; i <= tftImageCount; i++)
             {
-                var imgName = 
+                var imgName = Controls.Find($"imageNameTb{i}", true).First().Text;
+                var duration = Controls.Find($"imageDurationTb{i}", true).First().Text;
+                var height = 240;
+                var width = 640;
+                string startDate;
+                string stopDate;
+                
+                var useDates = Controls.Find($"imageTurnDatesOnTb{i}", true).First() as CheckBox;
+                if (useDates.Checked)
+                {
+                    startDate = Controls.Find($"imageStartDate{i}", true).First().Text;
+                    stopDate = Controls.Find($"imageStopDate{i}", true).First().Text;
+                }
+
+                var image = new XMLPlaylistModel.Playlist.PlaylistContent()
+                {
+                    Path = imgName,
+                    Duration = duration,
+                    Height = 240,
+                    Width = 640,
+                    StartDate = null,
+                    StopDate = null,
+                };
+
+                content.Add(image);
             }
+
+            var playlist = new XMLPlaylistModel.Playlist();
+            playlist.Content = content;
+            
+            var xml = new XmlSerializationService();
+            xml.WriteToXmlFile("C:\\Users\\BMadd\\OneDrive\\Documents\\Test\\playlist.xml", playlist, false);
         }
     }
 }
