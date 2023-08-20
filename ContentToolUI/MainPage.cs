@@ -6,6 +6,15 @@ namespace ContentToolUI
     public partial class MainPage : Form
     {
         private readonly ContentImporter _importer;
+        private readonly string ImageTypeControlName = "imageType";
+        private readonly string ImageFileNameControlName = "imageName";
+        private readonly string ImageDurationControlName = "imageDuration";
+        private readonly string ImageStartDateControlName = "imageStartDate";
+        private readonly string ImageStopDateControlName = "imageStopDate";
+        private readonly string UseDatesCheckboxControlName = "useDatesCheckbox";
+        private readonly string DeleteImageControlName = "deleteImage";
+        
+        
         public MainPage()
         {
             _importer = new ContentImporter();
@@ -38,25 +47,29 @@ namespace ContentToolUI
             u3ImageContainer.SuspendLayout();
 
             var images = _importer.GetAllImages();
-
-            int index = 0;
+            var tft = new List<ContentImage>();
+            var u2 = new List<ContentImage>();
+            var u3 = new List<ContentImage>();
+            
             foreach (var image in images)
             {
                 switch (image.ImageType)
                 {
                     case ContentImageType.TFT:
-                        CreateImageInfoLine(index, image, tftImageContainer);
+                        tft.Add(image);
                         break;
                     case ContentImageType.U2:
-                        CreateImageInfoLine(index, image, u2ImageContainer);
+                        u2.Add(image);
                         break;
                     case ContentImageType.U3:
-                        CreateImageInfoLine(index, image, u3ImageContainer);
+                        u3.Add(image);
                         break;
                 }
-
-                index++;
             }
+            
+            DrawImageListDisplay(tft, tftImageContainer);
+            DrawImageListDisplay(u2, u2ImageContainer);
+            DrawImageListDisplay(u3, u3ImageContainer);
 
             tftImageContainer.ResumeLayout();
             u2ImageContainer.ResumeLayout();
@@ -66,6 +79,16 @@ namespace ContentToolUI
             loadImagesButton.Enabled = false;
             refreshButton.Enabled = true;
             createContentBuildButton.Enabled = true;
+        }
+
+        private void DrawImageListDisplay(List<ContentImage> images, FlowLayoutPanel imageTypeContainer)
+        {
+            int index = 0;
+            foreach (var image in images)
+            {
+                CreateImageInfoLine(index, image, imageTypeContainer);
+                index++;
+            }
         }
 
         private void CreateImageInfoLine(int index, ContentImage image, FlowLayoutPanel imageTypeContainer)
@@ -78,55 +101,55 @@ namespace ContentToolUI
                 Visible = true,
             };
 
-            lineContainer.Controls.Add(CreateImageInfoImageTypeBox(index, image));
-            lineContainer.Controls.Add(CreateImageInfoImageNameTextBox(index, image));
-            lineContainer.Controls.Add(CreateImageInfoImageDurationTextBox(index, image));
-            lineContainer.Controls.Add(CreateImageInfoTurnOnDatesToggleButon(index));
-            lineContainer.Controls.Add(CreateImageInfoImageStartDateTextBox(index));
-            lineContainer.Controls.Add(CreateImageInfoImageStopDateTextBox(index));
-            lineContainer.Controls.Add(CreateImageInfoDoNotUseToggleButton(index));
+            lineContainer.Controls.Add(CreateImageInfoImageTypeBox(index, image, image.ImageType));
+            lineContainer.Controls.Add(CreateImageInfoImageNameTextBox(index, image, image.ImageType));
+            lineContainer.Controls.Add(CreateImageInfoImageDurationTextBox(index, image, image.ImageType));
+            lineContainer.Controls.Add(CreateImageInfoTurnOnDatesToggleButon(index, image.ImageType));
+            lineContainer.Controls.Add(CreateImageInfoImageStartDateTextBox(index, image.ImageType));
+            lineContainer.Controls.Add(CreateImageInfoImageStopDateTextBox(index, image.ImageType));
+            lineContainer.Controls.Add(CreateImageInfoDoNotUseToggleButton(index, image.ImageType));
 
             imageTypeContainer.Controls.Add(lineContainer);
         }
 
-        private TextBox CreateImageInfoImageTypeBox(int index, ContentImage image)
+        private TextBox CreateImageInfoImageTypeBox(int index, ContentImage image, ContentImageType imageType)
         {
             return new TextBox()
             {
-                Name = "imageTypeTb" + index,
+                Name = imageType + ImageTypeControlName + index,
                 Text = image.ImageType.ToString(),
                 ReadOnly = true,
                 Size = new Size(50, 23)
             };
         }
 
-        private TextBox CreateImageInfoImageNameTextBox(int index, ContentImage image)
+        private TextBox CreateImageInfoImageNameTextBox(int index, ContentImage image, ContentImageType imageType)
         {
             return new TextBox()
             {
-                Name = "imageNameTb" + index,
+                Name =  imageType + ImageFileNameControlName + index,
                 Text = image.Name,
                 ReadOnly = true,
                 Size = new Size(300, 23)
             };
         }
 
-        private TextBox CreateImageInfoImageDurationTextBox(int index, ContentImage image)
+        private TextBox CreateImageInfoImageDurationTextBox(int index, ContentImage image, ContentImageType imageType)
         {
             return new TextBox()
             {
-                Name = "imageDurationTb" + index,
+                Name = imageType + ImageDurationControlName + index,
                 Text = image.Duration,
                 ReadOnly = false,
                 Size = new Size(50, 23)
             };
         }
 
-        private TextBox CreateImageInfoImageStartDateTextBox(int index)
+        private TextBox CreateImageInfoImageStartDateTextBox(int index, ContentImageType imageType)
         {
             var box = new TextBox()
             {
-                Name = "imageStartDateTb" + index,
+                Name = imageType + ImageStartDateControlName + index,
                 ReadOnly = true,
                 BackColor = Color.DarkGray
             };
@@ -165,11 +188,11 @@ namespace ContentToolUI
             }
         }
 
-        private TextBox CreateImageInfoImageStopDateTextBox(int index)
+        private TextBox CreateImageInfoImageStopDateTextBox(int index, ContentImageType imageType)
         {
             var box = new TextBox()
             {
-                Name = "imageStopDateTb" + index,
+                Name = imageType + ImageStopDateControlName + index,
                 ReadOnly = true,
                 BackColor = Color.DarkGray
             };
@@ -196,11 +219,11 @@ namespace ContentToolUI
             return box;
         }
 
-        private CheckBox CreateImageInfoTurnOnDatesToggleButon(int index)
+        private CheckBox CreateImageInfoTurnOnDatesToggleButon(int index, ContentImageType imageType)
         {
             var checkbox = new CheckBox()
             {
-                Name = "imageTurnDatesOnCb" + index,
+                Name = imageType + UseDatesCheckboxControlName + index,
                 Text = "Use Dates:",
                 TextAlign = ContentAlignment.MiddleRight,
                 AutoSize = true,
@@ -210,8 +233,8 @@ namespace ContentToolUI
 
             checkbox.Click += (sender, e) =>
             {
-                var startDateName = "imageStartDateTb" + index;
-                var stopDateName = "imageStopDateTb" + index;
+                var startDateName = imageType + ImageStartDateControlName + index;
+                var stopDateName = imageType + ImageStopDateControlName + index;
 
                 TextBox startDate = Controls.Find(startDateName, true).FirstOrDefault() as TextBox;
                 TextBox stopDate = Controls.Find(stopDateName, true).FirstOrDefault() as TextBox;
@@ -237,11 +260,11 @@ namespace ContentToolUI
             return checkbox;
         }
 
-        private CheckBox CreateImageInfoDoNotUseToggleButton(int index)
+        private CheckBox CreateImageInfoDoNotUseToggleButton(int index, ContentImageType imageType)
         {
             return new CheckBox()
             {
-                Name = "doNotUseImageTb" + index,
+                Name = imageType + DeleteImageControlName + index,
                 Text = "Delete image:",
                 TextAlign = ContentAlignment.MiddleRight,
                 AutoSize = true,
@@ -326,16 +349,16 @@ namespace ContentToolUI
 
             for (int i = 0; i <= imageCount; i++)
             {
-                var deleteImage = Controls.Find($"doNotUseImageTb{i}", true).First() as CheckBox;
-                var imageTypeTextBox = Controls.Find($"imageTypeTb{i}", true).First().Text;
+                var deleteImage = Controls.Find($"{imageType}{DeleteImageControlName}{i}", true).First() as CheckBox;
+                var imageTypeTextBox = Controls.Find($"{imageType}{ImageTypeControlName}{i}", true).First().Text;
                 
                 if (deleteImage.Checked || imageTypeTextBox != imageType.ToString())
                 {
                     continue;
                 }
                 
-                var imgName = Controls.Find($"imageNameTb{i}", true).First().Text;
-                var duration = Controls.Find($"imageDurationTb{i}", true).First().Text;
+                var imgName = Controls.Find($"{imageType}{ImageFileNameControlName}{i}", true).First().Text;
+                var duration = Controls.Find($"{imageType}{ImageDurationControlName}{i}", true).First().Text;
                 var height = _importer.Resolutions[$"{imageType} Height"];
                 var width = _importer.Resolutions[$"{imageType} Width"];
 
@@ -347,11 +370,11 @@ namespace ContentToolUI
                     Width = width,
                 };
                 
-                var useDates = Controls.Find($"imageTurnDatesOnCb{i}", true).First() as CheckBox;
+                var useDates = Controls.Find($"{imageType}{UseDatesCheckboxControlName}{i}", true).First() as CheckBox;
                 if (useDates.Checked)
                 {
-                    xmlEntry.StartDate = Controls.Find($"imageStartDateTb{i}", true).First().Text;
-                    xmlEntry.StopDate = Controls.Find($"imageStopDateTb{i}", true).First().Text;
+                    xmlEntry.StartDate = Controls.Find($"{imageType}{ImageStartDateControlName}{i}", true).First().Text;
+                    xmlEntry.StopDate = Controls.Find($"{imageType}{ImageStopDateControlName}{i}", true).First().Text;
                 }
                 
                 content.Add(xmlEntry);
