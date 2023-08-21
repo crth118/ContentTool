@@ -1,5 +1,6 @@
 using ContentToolLibrary;
 using ContentToolLibrary.Models;
+using ImageMagick;
 
 namespace ContentToolUI
 {
@@ -14,6 +15,9 @@ namespace ContentToolUI
         private readonly string UseDatesCheckboxControlName = "useDatesCheckbox";
         private readonly string DeleteImageControlName = "deleteImage";
         private readonly string CopyDurationToAllControlName = "copyDuration";
+        private int TFTimagecount { get; set; }
+        private int U2imagecount { get; set; }
+        private int U3imagecount { get; set; }
 
         public MainPage()
         {
@@ -42,6 +46,10 @@ namespace ContentToolUI
         {
             Cursor = Cursors.WaitCursor;
 
+            TFTimagecount = -1;
+            U2imagecount = -1;
+            U3imagecount = -1;
+
             tftImageContainer.SuspendLayout();
             u2ImageContainer.SuspendLayout();
             u3ImageContainer.SuspendLayout();
@@ -57,12 +65,15 @@ namespace ContentToolUI
                 {
                     case ContentImageType.TFT:
                         tft.Add(image);
+                        TFTimagecount++;
                         break;
                     case ContentImageType.U2:
                         u2.Add(image);
+                        U2imagecount++;
                         break;
                     case ContentImageType.U3:
                         u3.Add(image);
+                        U3imagecount++;
                         break;
                 }
             }
@@ -139,13 +150,38 @@ namespace ContentToolUI
 
         private TextBox CreateImageInfoImageDurationTextBox(int index, ContentImage image, ContentImageType imageType)
         {
-            return new TextBox()
+            var box = new TextBox()
             {
                 Name = imageType + ImageDurationControlName + index,
                 Text = image.Duration,
                 ReadOnly = false,
                 Size = new Size(50, 23)
             };
+
+            var validate = new ValidationService();
+
+            if (validate.IsValidSlideDuration(box.Text))
+            {
+                box.BackColor = Color.LightGreen;
+            }
+            else
+            {
+                box.BackColor = Color.IndianRed;
+            }
+
+            box.TextChanged += (sender, e) =>
+            {
+                if (!validate.IsValidSlideDuration(box.Text))
+                {
+                    box.BackColor = Color.IndianRed;
+                }
+                else
+                {
+                    box.BackColor = Color.LightGreen;
+                }
+            };
+
+            return box;
         }
 
         private TextBox CreateImageInfoImageStartDateTextBox(int index, ContentImageType imageType)
@@ -280,26 +316,42 @@ namespace ContentToolUI
         {
             var button = new Button()
             {
-                Image = Image.FromFile(".\\icons\\icons8-copy-100.png").GetThumbnailImage(100, 100, null, IntPtr.Zero),
-                Size = new Size(20, 20),
-                Margin = new Padding(0, 2, 0, 0)
+                Image = Image.FromFile(".\\icons\\icons8-copy-100.png").GetThumbnailImage(10, 10, null, IntPtr.Zero),
+                ImageAlign = ContentAlignment.MiddleCenter,
+                Size = new Size(17, 17),
+                Margin = new Padding(0, 5, 0, 0),
+                FlatStyle = FlatStyle.Flat
             };
+
+            button.FlatAppearance.BorderColor = Color.Gray;
 
             button.Click += (sender, e) =>
             {
-                foreach (Control control in tftImageContainer.Controls)
+                switch (imageType)
                 {
-                    if (control.Name.ToUpper().Contains(ImageDurationControlName))
-                    {
-                        var newduration = Controls.Find($"${imageType}{ImageDurationControlName}{index}", true).First().Text;
-                        var textbox = control as TextBox;
-                        textbox.Text = newduration;
-                    }
+                    case ContentImageType.TFT:
+                        SetDurationsForAll(TFTimagecount, index, ContentImageType.TFT);
+                        break;
+                    case ContentImageType.U2:
+                        SetDurationsForAll(U2imagecount, index, ContentImageType.U2);
+                        break;
+                    case ContentImageType.U3:
+                        SetDurationsForAll(U3imagecount, index, ContentImageType.U3);
+                        break;
                 }
-
             };          
 
             return button;
+        }
+
+        private void SetDurationsForAll(int imageCount, int index, ContentImageType imageType)
+        {
+            var newDuration = Controls.Find($"{imageType}{ImageDurationControlName}{index}", true).First().Text;
+            for (int i = 0; i <= imageCount; i++)
+            {
+                var duration = Controls.Find($"{imageType}{ImageDurationControlName}{i}", true).First();
+                duration.Text = newDuration;
+            }
         }
 
         private void refreshButton_Click(object sender, EventArgs e)
