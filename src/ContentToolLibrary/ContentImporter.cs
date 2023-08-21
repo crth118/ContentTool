@@ -41,17 +41,17 @@ namespace ContentToolLibrary
 
                     if (IsTFTImage(height, width))
                     {
-                        imageList.Add(new ContentImage(ContentImageType.TFT, file.Name, file.FullName));
+                        imageList.Add(new ContentImage(ContentImageType.TFT, file.Name));
                     }
 
                     if (IsU2Image(height, width))
                     {
-                        imageList.Add(new ContentImage(ContentImageType.U2, file.Name, file.FullName));
+                        imageList.Add(new ContentImage(ContentImageType.U2, file.Name));
                     }
 
                     if (IsU3Image(height, width))
                     {
-                        imageList.Add(new ContentImage(ContentImageType.U3, file.Name, file.FullName));
+                        imageList.Add(new ContentImage(ContentImageType.U3, file.Name));
                     }
                 }
             }

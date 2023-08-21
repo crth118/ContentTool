@@ -40,6 +40,12 @@
             createContentBuildButton = new Button();
             tftImageContainer = new FlowLayoutPanel();
             tftLabel = new Label();
+            headersTFT = new FlowLayoutPanel();
+            Type = new Label();
+            imageNameHeader = new Label();
+            durationHeader = new Label();
+            label1 = new Label();
+            label2 = new Label();
             u2ImageContainer = new FlowLayoutPanel();
             u2Label = new Label();
             u3ImageContainer = new FlowLayoutPanel();
@@ -48,6 +54,7 @@
             mainContainer.SuspendLayout();
             headerContainer.SuspendLayout();
             tftImageContainer.SuspendLayout();
+            headersTFT.SuspendLayout();
             u2ImageContainer.SuspendLayout();
             u3ImageContainer.SuspendLayout();
             SuspendLayout();
@@ -165,6 +172,7 @@
             tftImageContainer.AutoSize = true;
             tftImageContainer.BorderStyle = BorderStyle.FixedSingle;
             tftImageContainer.Controls.Add(tftLabel);
+            tftImageContainer.Controls.Add(headersTFT);
             tftImageContainer.Location = new Point(3, 123);
             tftImageContainer.Margin = new Padding(3, 3, 3, 10);
             tftImageContainer.MaximumSize = new Size(1139, 0);
@@ -184,6 +192,67 @@
             tftLabel.Size = new Size(88, 21);
             tftLabel.TabIndex = 0;
             tftLabel.Text = "TFT Images";
+            // 
+            // headersTFT
+            // 
+            headersTFT.Controls.Add(Type);
+            headersTFT.Controls.Add(imageNameHeader);
+            headersTFT.Controls.Add(durationHeader);
+            headersTFT.Controls.Add(label1);
+            headersTFT.Controls.Add(label2);
+            headersTFT.Location = new Point(0, 21);
+            headersTFT.Margin = new Padding(0);
+            headersTFT.Name = "headersTFT";
+            headersTFT.Size = new Size(1135, 21);
+            headersTFT.TabIndex = 2;
+            headersTFT.Visible = false;
+            // 
+            // Type
+            // 
+            Type.Location = new Point(3, 5);
+            Type.Margin = new Padding(3, 5, 3, 0);
+            Type.Name = "Type";
+            Type.Size = new Size(50, 15);
+            Type.TabIndex = 1;
+            Type.Text = "Type";
+            // 
+            // imageNameHeader
+            // 
+            imageNameHeader.Location = new Point(59, 5);
+            imageNameHeader.Margin = new Padding(3, 5, 3, 0);
+            imageNameHeader.Name = "imageNameHeader";
+            imageNameHeader.Size = new Size(330, 15);
+            imageNameHeader.TabIndex = 2;
+            imageNameHeader.Text = "Image Name";
+            // 
+            // durationHeader
+            // 
+            durationHeader.AutoSize = true;
+            durationHeader.Location = new Point(395, 5);
+            durationHeader.Margin = new Padding(3, 5, 107, 0);
+            durationHeader.Name = "durationHeader";
+            durationHeader.Size = new Size(53, 15);
+            durationHeader.TabIndex = 3;
+            durationHeader.Text = "Duration";
+            // 
+            // label1
+            // 
+            label1.Location = new Point(558, 5);
+            label1.Margin = new Padding(3, 5, 3, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(100, 15);
+            label1.TabIndex = 4;
+            label1.Text = "Start Date";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(664, 5);
+            label2.Margin = new Padding(3, 5, 3, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(58, 15);
+            label2.TabIndex = 5;
+            label2.Text = "Stop Date";
             // 
             // u2ImageContainer
             // 
@@ -251,6 +320,8 @@
             headerContainer.PerformLayout();
             tftImageContainer.ResumeLayout(false);
             tftImageContainer.PerformLayout();
+            headersTFT.ResumeLayout(false);
+            headersTFT.PerformLayout();
             u2ImageContainer.ResumeLayout(false);
             u2ImageContainer.PerformLayout();
             u3ImageContainer.ResumeLayout(false);
@@ -278,5 +349,11 @@
         private Label u3label;
         private Button refreshButton;
         private Button createContentBuildButton;
+        private Label Type;
+        private FlowLayoutPanel headersTFT;
+        private Label imageNameHeader;
+        private Label durationHeader;
+        private Label label1;
+        private Label label2;
     }
 }

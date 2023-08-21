@@ -13,8 +13,8 @@ namespace ContentToolUI
         private readonly string ImageStopDateControlName = "imageStopDate";
         private readonly string UseDatesCheckboxControlName = "useDatesCheckbox";
         private readonly string DeleteImageControlName = "deleteImage";
-        
-        
+        private readonly string CopyDurationToAllControlName = "copyDuration";
+
         public MainPage()
         {
             _importer = new ContentImporter();
@@ -50,7 +50,7 @@ namespace ContentToolUI
             var tft = new List<ContentImage>();
             var u2 = new List<ContentImage>();
             var u3 = new List<ContentImage>();
-            
+
             foreach (var image in images)
             {
                 switch (image.ImageType)
@@ -66,7 +66,9 @@ namespace ContentToolUI
                         break;
                 }
             }
-            
+
+            headersTFT.Visible = true;
+
             DrawImageListDisplay(tft, tftImageContainer);
             DrawImageListDisplay(u2, u2ImageContainer);
             DrawImageListDisplay(u3, u3ImageContainer);
@@ -104,6 +106,7 @@ namespace ContentToolUI
             lineContainer.Controls.Add(CreateImageInfoImageTypeBox(index, image, image.ImageType));
             lineContainer.Controls.Add(CreateImageInfoImageNameTextBox(index, image, image.ImageType));
             lineContainer.Controls.Add(CreateImageInfoImageDurationTextBox(index, image, image.ImageType));
+            lineContainer.Controls.Add(CreateCopyDurationToAllButton(index, image.ImageType));
             lineContainer.Controls.Add(CreateImageInfoTurnOnDatesToggleButon(index, image.ImageType));
             lineContainer.Controls.Add(CreateImageInfoImageStartDateTextBox(index, image.ImageType));
             lineContainer.Controls.Add(CreateImageInfoImageStopDateTextBox(index, image.ImageType));
@@ -127,10 +130,10 @@ namespace ContentToolUI
         {
             return new TextBox()
             {
-                Name =  imageType + ImageFileNameControlName + index,
+                Name = imageType + ImageFileNameControlName + index,
                 Text = image.Name,
                 ReadOnly = true,
-                Size = new Size(300, 23)
+                Size = new Size(330, 23)
             };
         }
 
@@ -273,6 +276,32 @@ namespace ContentToolUI
             };
         }
 
+        private Button CreateCopyDurationToAllButton(int index, ContentImageType imageType)
+        {
+            var button = new Button()
+            {
+                Image = Image.FromFile(".\\icons\\icons8-copy-100.png").GetThumbnailImage(100, 100, null, IntPtr.Zero),
+                Size = new Size(20, 20),
+                Margin = new Padding(0, 2, 0, 0)
+            };
+
+            button.Click += (sender, e) =>
+            {
+                foreach (Control control in tftImageContainer.Controls)
+                {
+                    if (control.Name.ToUpper().Contains(ImageDurationControlName))
+                    {
+                        var newduration = Controls.Find($"${imageType}{ImageDurationControlName}{index}", true).First().Text;
+                        var textbox = control as TextBox;
+                        textbox.Text = newduration;
+                    }
+                }
+
+            };          
+
+            return button;
+        }
+
         private void refreshButton_Click(object sender, EventArgs e)
         {
             Controls.Clear();
@@ -285,22 +314,22 @@ namespace ContentToolUI
             Cursor = Cursors.WaitCursor;
             var filehandler = new FileHandler();
             var workspaceSbnexgen = $"{filehandler.WorkSpace}/sbnexgen2";
-            
+
             // Copy current content to from contents ./workspace/sbnexgen2
             filehandler.CopyDirectory(currentContentPath.Text, workspaceSbnexgen, false);
-            
+
             // Copy new images into new sbnexgen2
             filehandler.CopyDirectory(newImagesPath.Text, workspaceSbnexgen, false);
-            
+
             // Compress images in the new build inside .\workspace
             var files = new DirectoryInfo(workspaceSbnexgen).GetFiles("*.jpg");
             foreach (var file in files)
             {
                 ImageCompressor.CompressImage(file.FullName);
             }
-            
+
             var images = _importer.GetAllImages();
-            
+
             // Count images from current content and new images that will make up the new build
             int tftImageCount = -1;
             int u2ImageCount = -1;
@@ -325,7 +354,7 @@ namespace ContentToolUI
             var tftPlaylist = CreatePlaylistModel(tftImageCount, ContentImageType.TFT);
             var u2Playlist = CreatePlaylistModel(u2ImageCount, ContentImageType.U2);
             var u3Playlist = CreatePlaylistModel(u3ImageCount, ContentImageType.U3);
-            
+
             GenerateImageTypePlaylists(ContentImageType.TFT, workspaceSbnexgen, tftPlaylist);
             GenerateImageTypePlaylists(ContentImageType.U2, workspaceSbnexgen, u2Playlist);
             GenerateImageTypePlaylists(ContentImageType.U3, workspaceSbnexgen, u3Playlist);
@@ -333,7 +362,7 @@ namespace ContentToolUI
             var outputPath = "C:\\Users\\BMadd\\OneDrive\\Documents\\Test";
             filehandler.SplitBuildIntoArtAndSnd(workspaceSbnexgen);
             filehandler.ZipNewBuild(outputPath);
-            
+
             Cursor = Cursors.Default;
             MessageBox.Show($"Build complete.\nSaved to: {outputPath}");
         }
@@ -346,7 +375,7 @@ namespace ContentToolUI
             var xml = new XmlSerializationService();
             var busyAttract = $"{destination}/playList_{imageType}_busyAttract.xml";
             var idleAttract = $"{destination}/playList_{imageType}_idleAttract.xml";
-            
+
             xml.WriteToXmlFile(busyAttract, playlist, false);
             xml.WriteToXmlFile(idleAttract, playlist, false);
         }
@@ -359,12 +388,12 @@ namespace ContentToolUI
             {
                 var deleteImage = Controls.Find($"{imageType}{DeleteImageControlName}{i}", true).First() as CheckBox;
                 var imageTypeTextBox = Controls.Find($"{imageType}{ImageTypeControlName}{i}", true).First().Text;
-                
+
                 if (deleteImage.Checked || imageTypeTextBox != imageType.ToString())
                 {
                     continue;
                 }
-                
+
                 var imgName = Controls.Find($"{imageType}{ImageFileNameControlName}{i}", true).First().Text;
                 var duration = Controls.Find($"{imageType}{ImageDurationControlName}{i}", true).First().Text;
                 var height = _importer.Resolutions[$"{imageType} Height"];
@@ -377,14 +406,14 @@ namespace ContentToolUI
                     Height = height,
                     Width = width,
                 };
-                
+
                 var useDates = Controls.Find($"{imageType}{UseDatesCheckboxControlName}{i}", true).First() as CheckBox;
                 if (useDates.Checked)
                 {
                     xmlEntry.StartDate = Controls.Find($"{imageType}{ImageStartDateControlName}{i}", true).First().Text;
                     xmlEntry.StopDate = Controls.Find($"{imageType}{ImageStopDateControlName}{i}", true).First().Text;
                 }
-                
+
                 content.Add(xmlEntry);
             }
 
