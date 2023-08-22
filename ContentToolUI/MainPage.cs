@@ -6,7 +6,7 @@ namespace ContentToolUI
 {
     public partial class MainPage : Form
     {
-        private readonly ContentImporter _importer;
+        private readonly ContentImporter _importer = new ContentImporter();
         private readonly string ImageTypeControlName = "imageType";
         private readonly string ImageFileNameControlName = "imageName";
         private readonly string ImageDurationControlName = "imageDuration";
@@ -15,14 +15,14 @@ namespace ContentToolUI
         private readonly string UseDatesCheckboxControlName = "useDatesCheckbox";
         private readonly string DeleteImageControlName = "deleteImage";
         private readonly string CopyDurationToAllControlName = "copyDuration";
+        public string CompletedBuildOutputPath;
+
         private int TFTimagecount { get; set; }
         private int U2imagecount { get; set; }
         private int U3imagecount { get; set; }
 
         public MainPage()
         {
-            _importer = new ContentImporter();
-
             InitializeComponent();
             //// Color Scheme
             // Header Container
@@ -40,6 +40,7 @@ namespace ContentToolUI
         {
             currentContentPath.Text = _importer.CurrentContentPath;
             newImagesPath.Text = _importer.NewImagesPath;
+            CompletedBuildOutputPath = outputPathTextBox.Text;
         }
 
         private void loadImagesButton_Click(object sender, EventArgs e)
@@ -199,7 +200,7 @@ namespace ContentToolUI
 
                 if (!validate.IsValidDate(box.Text))
                 {
-                    box.BackColor = Color.Red;
+                    box.BackColor = Color.IndianRed;
                 }
                 else
                 {
@@ -217,7 +218,7 @@ namespace ContentToolUI
 
         private void datesTextBox_Hover(object sender, EventArgs e, TextBox box)
         {
-            if (box.BackColor == Color.Red)
+            if (box.BackColor == Color.IndianRed)
             {
                 toolTip1.SetToolTip(box, "Warning: Invalid date");
             }
@@ -242,7 +243,7 @@ namespace ContentToolUI
 
                 if (!validate.IsValidDate(box.Text))
                 {
-                    box.BackColor = Color.Red;
+                    box.BackColor = Color.IndianRed;
                 }
                 else
                 {
@@ -339,7 +340,7 @@ namespace ContentToolUI
                         SetDurationsForAll(U3imagecount, index, ContentImageType.U3);
                         break;
                 }
-            };          
+            };
 
             return button;
         }
@@ -411,17 +412,19 @@ namespace ContentToolUI
             GenerateImageTypePlaylists(ContentImageType.U2, workspaceSbnexgen, u2Playlist);
             GenerateImageTypePlaylists(ContentImageType.U3, workspaceSbnexgen, u3Playlist);
 
-            var outputPath = "C:\\Users\\BMadd\\OneDrive\\Documents\\Test";
+            // TO DO: Move this part to the back end from here.
             filehandler.SplitBuildIntoArtAndSnd(workspaceSbnexgen);
-            filehandler.ZipNewBuild(outputPath);
+            filehandler.ZipNewBuild(CompletedBuildOutputPath);
 
             Cursor = Cursors.Default;
-            MessageBox.Show($"Build complete.\nSaved to: {outputPath}");
+            MessageBox.Show($"Build complete.\nSaved to: {CompletedBuildOutputPath}");
         }
 
         /// <summary>
         /// Creates the two playlist types (busyAttract and idleAttract) for the specified image type.
         /// </summary>
+        /// 
+        // TO DO: Move this to the backend
         private void GenerateImageTypePlaylists(ContentImageType imageType, string destination, XMLPlaylistModel.Playlist playlist)
         {
             var xml = new XmlSerializationService();
@@ -474,5 +477,60 @@ namespace ContentToolUI
 
             return playlist;
         }
+
+        private void changeCurrentContentDir_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new FolderBrowserDialog())
+            {
+                DialogResult result = dialog.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    currentContentPath.Text = dialog.SelectedPath;
+                }
+            }
+        }
+
+        private void changeNewImagesDirButton_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new FolderBrowserDialog())
+            {
+                DialogResult result = dialog.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    newImagesPath.Text = dialog.SelectedPath;
+                }
+            }
+        }
+
+        private void changeOutputDirButton_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new FolderBrowserDialog())
+            {
+                DialogResult result = dialog.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    outputPathTextBox.Text = dialog.SelectedPath;
+                }
+            }
+        }
+
+        private void currentContentPath_TextChange(object sender, EventArgs e)
+        {
+            _importer.CurrentContentPath = currentContentPath.Text;
+        }
+
+        private void newImagesPath_TextChange(object sender, EventArgs e)
+        {
+            _importer.NewImagesPath = newImagesPath.Text;
+        }
+
+        private void outputPathTextBox_TextChange(object sender, EventArgs e)
+        {
+            CompletedBuildOutputPath = outputPathTextBox.Text;
+        }
+
     }
 }
