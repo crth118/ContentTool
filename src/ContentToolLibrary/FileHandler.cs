@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Net;
 
 namespace ContentToolLibrary
@@ -10,14 +11,14 @@ namespace ContentToolLibrary
     /// </summary>
     public class FileHandler
     {
-        private readonly string _workspacePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Workspace");
+        public readonly string WorkSpace = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Workspace");
         private readonly string _artDirPath;
         private readonly string _sndDirPath;
 
         public FileHandler()
         {
-            _artDirPath = $"{_workspacePath}/Art";
-            _sndDirPath = $"{_workspacePath}/Snd";
+            _artDirPath = $"{WorkSpace}/ART";
+            _sndDirPath = $"{WorkSpace}/SND";
         }
         
         
@@ -67,10 +68,10 @@ namespace ContentToolLibrary
 
                 if (extensions.ToLower() == ".wav")
                 {
-                    file.CopyTo(_sndDirPath);
+                    file.CopyTo($"{_sndDirPath}/{file.Name}");
                 }
 
-                file.CopyTo(_artDirPath);
+                file.CopyTo($"{_artDirPath}/{file.Name}");
             }
         }
 
@@ -85,6 +86,11 @@ namespace ContentToolLibrary
             {
                 Directory.CreateDirectory(_sndDirPath);
             }
+        }
+
+        public void ZipNewBuild(string outputPath)
+        {
+            ZipFile.CreateFromDirectory(WorkSpace, $"{outputPath}\\CompletedBuild.zip", CompressionLevel.SmallestSize, false);
         }
     }
 }

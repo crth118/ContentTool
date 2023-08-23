@@ -14,9 +14,9 @@ namespace ContentToolLibrary
     public class ContentImporter
     {
         // Default ContentPath
-        public string CurrentContentPath { get; set; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CurrentContent");
+        public string CurrentContentPath { get; set; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CurrentContent/sbnexgen2");
         public string NewImagesPath { get; set; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NewImages");
-        private Dictionary<string, int> Resolutions { get; set; }
+        public Dictionary<string, int> Resolutions { get; set; }
 
         public ContentImporter()
         {
@@ -41,17 +41,17 @@ namespace ContentToolLibrary
 
                     if (IsTFTImage(height, width))
                     {
-                        imageList.Add(new ContentImage(ContentImageType.TFT, file.Name, file.FullName));
+                        imageList.Add(new ContentImage(ContentImageType.TFT, file.Name));
                     }
 
                     if (IsU2Image(height, width))
                     {
-                        imageList.Add(new ContentImage(ContentImageType.U2, file.Name, file.FullName));
+                        imageList.Add(new ContentImage(ContentImageType.U2, file.Name));
                     }
 
                     if (IsU3Image(height, width))
                     {
-                        imageList.Add(new ContentImage(ContentImageType.U3, file.Name, file.FullName));
+                        imageList.Add(new ContentImage(ContentImageType.U3, file.Name));
                     }
                 }
             }

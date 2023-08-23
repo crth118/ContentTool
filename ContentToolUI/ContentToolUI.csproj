@@ -10,12 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\ContentToolLibrary\ContentToolLibrary.csproj" />
-	  <Content Include="CurrentContent\**">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="NewImages\**">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
   </ItemGroup>
 
   <ItemGroup>

@@ -7,17 +7,12 @@ namespace ContentToolLibrary
     {
         public ContentImageType ImageType { get; set; }
         public string Name { get; set; }
-        public string FullPath { get; set; }
-        public string Duration { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? StopDate { get; set; }
-        public bool Use { get; set; } = true;
+        public string Duration { get; set; } = "00.08";
 
-        public ContentImage(ContentImageType imageType, string name, string fullPath)
+        public ContentImage(ContentImageType imageType, string name)
         {
             ImageType = imageType;
             Name = name;
-            FullPath = fullPath;
         }
     }
 }
