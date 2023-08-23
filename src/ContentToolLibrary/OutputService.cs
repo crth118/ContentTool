@@ -5,8 +5,8 @@ namespace ContentToolLibrary
     public class OutputService
     {
         public string OutputLocation { get; set; }
-        private string _busyAttractPlaylist = "{0}/playlist_{1}_busyAttract.xml";
-        private string _idleAttractPlaylist = "{0}/playlist_{1}_idleAttract.xml";
+        private readonly string _busyAttractPlaylist = "{0}/playlist_{1}_busyAttract.xml";
+        private readonly string _idleAttractPlaylist = "{0}/playlist_{1}_idleAttract.xml";
 
         public OutputService(string outputLocation)
         {
@@ -29,7 +29,7 @@ namespace ContentToolLibrary
             var idleAttract = string.Format(_idleAttractPlaylist, destination, imageType);
             
             xml.WriteToXmlFile(busyAttract, playlist, false);
-            xml.WriteToXmlFile(idleAttract, imageType, false);
+            xml.WriteToXmlFile(idleAttract, playlist, false);
         }
     }
 }

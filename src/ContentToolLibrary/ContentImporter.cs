@@ -23,10 +23,6 @@ namespace ContentToolLibrary
             Resolutions = SetResolutionsDictionary();
         }
         
-        /// <summary>
-        /// Get all the images that make up the new content build.
-        /// </summary>
-        /// <returns>A list of content Images</returns>
         public List<ContentImage> GetAllImages()
         {
             var imageList = new List<ContentImage>();

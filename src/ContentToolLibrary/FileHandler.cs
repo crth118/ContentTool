@@ -12,15 +12,16 @@ namespace ContentToolLibrary
     public class FileHandler
     {
         public readonly string WorkSpace = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Workspace");
+        public readonly string WorkSpaceSbnexgen;
         private readonly string _artDirPath;
         private readonly string _sndDirPath;
 
         public FileHandler()
         {
-            _artDirPath = $"{WorkSpace}/ART";
-            _sndDirPath = $"{WorkSpace}/SND";
+            WorkSpaceSbnexgen = $"{WorkSpace}\\sbnexgen2";
+            _artDirPath = $"{WorkSpace}\\ART";
+            _sndDirPath = $"{WorkSpace}\\SND";
         }
-        
         
         public void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
         {

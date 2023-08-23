@@ -34,64 +34,6 @@ namespace ContentToolUI
             CompletedBuildOutputPath = outputPathTextBox.Text;
         }
         
-        private void createContentBuildButton_Click(object sender, EventArgs e)
-        {
-            Cursor = Cursors.WaitCursor;
-            
-            var filehandler = new FileHandler();
-            var workspaceSbnexgen = $"{filehandler.WorkSpace}/sbnexgen2";
-
-            // Copy current content to from contents ./workspace/sbnexgen2
-            filehandler.CopyDirectory(currentContentPath.Text, workspaceSbnexgen, false);
-
-            // Copy new images into new sbnexgen2
-            filehandler.CopyDirectory(newImagesPath.Text, workspaceSbnexgen, false);
-
-            // Compress images in the new build inside .\workspace
-            var files = new DirectoryInfo(workspaceSbnexgen).GetFiles("*.jpg");
-            foreach (var file in files)
-            {
-                ImageCompressor.CompressImage(file.FullName);
-            }
-
-            var images = _importer.GetAllImages();
-
-            // Count images from current content and new images that will make up the new build
-            int tftImageCount = -1;
-            int u2ImageCount = -1;
-            int u3ImageCount = -1;
-
-            foreach (var image in images)
-            {
-                switch (image.ImageType)
-                {
-                    case ContentImageType.TFT:
-                        tftImageCount++;
-                        break;
-                    case ContentImageType.U2:
-                        u2ImageCount++;
-                        break;
-                    case ContentImageType.U3:
-                        u3ImageCount++;
-                        break;
-                }
-            }
-
-            var tftPlaylist = CreatePlaylistModel(TFTimagecount, ContentImageType.TFT);
-            var u2Playlist = CreatePlaylistModel(U2imagecount, ContentImageType.U2);
-            var u3Playlist = CreatePlaylistModel(U3imagecount, ContentImageType.U3);
-            
-            var outputService = new OutputService(CompletedBuildOutputPath);
-            outputService.GenerateXmlPlaylists(ContentImageType.TFT, tftPlaylist, workspaceSbnexgen);
-            outputService.GenerateXmlPlaylists(ContentImageType.U2, u2Playlist, workspaceSbnexgen);
-            outputService.GenerateXmlPlaylists(ContentImageType.U3, u3Playlist, workspaceSbnexgen);
-            
-            outputService.SaveCompletedBuildZip(workspaceSbnexgen);
-            
-            Cursor = Cursors.Default;
-            MessageBox.Show($"Build complete.\nSaved to: {CompletedBuildOutputPath}");
-        }
-
         private void loadImagesButton_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
@@ -137,11 +79,43 @@ namespace ContentToolUI
             tftImageContainer.ResumeLayout();
             u2ImageContainer.ResumeLayout();
             u3ImageContainer.ResumeLayout();
+            
             Cursor = Cursors.Default;
 
             loadImagesButton.Enabled = false;
             refreshButton.Enabled = true;
             createContentBuildButton.Enabled = true;
+        }
+        
+        private void createContentBuildButton_Click(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            
+            var filehandler = new FileHandler();
+            
+            // .workspace/sbnexgen2 is where the new build will be put together and generated
+            filehandler.CopyDirectory(currentContentPath.Text, filehandler.WorkSpaceSbnexgen, false);
+            filehandler.CopyDirectory(newImagesPath.Text, filehandler.WorkSpaceSbnexgen, false);
+            
+            var files = new DirectoryInfo(filehandler.WorkSpaceSbnexgen).GetFiles("*.jpg");
+            foreach (var file in files)
+            {
+                ImageCompressor.CompressImage(file.FullName);
+            }
+            
+            var tftPlaylist = CreatePlaylistModel(TFTimagecount, ContentImageType.TFT);
+            var u2Playlist = CreatePlaylistModel(U2imagecount, ContentImageType.U2);
+            var u3Playlist = CreatePlaylistModel(U3imagecount, ContentImageType.U3);
+            
+            var outputService = new OutputService(CompletedBuildOutputPath);
+            outputService.GenerateXmlPlaylists(ContentImageType.TFT, tftPlaylist, filehandler.WorkSpaceSbnexgen);
+            outputService.GenerateXmlPlaylists(ContentImageType.U2, u2Playlist, filehandler.WorkSpaceSbnexgen);
+            outputService.GenerateXmlPlaylists(ContentImageType.U3, u3Playlist, filehandler.WorkSpaceSbnexgen);
+            
+            outputService.SaveCompletedBuildZip(filehandler.WorkSpaceSbnexgen);
+            
+            Cursor = Cursors.Default;
+            MessageBox.Show($"Build complete.\nSaved to: {CompletedBuildOutputPath}");
         }
         
         private XMLPlaylistModel.Playlist CreatePlaylistModel(int imageCount, ContentImageType imageType)
