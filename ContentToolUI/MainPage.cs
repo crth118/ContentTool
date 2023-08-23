@@ -408,14 +408,21 @@ namespace ContentToolUI
             var u2Playlist = CreatePlaylistModel(u2ImageCount, ContentImageType.U2);
             var u3Playlist = CreatePlaylistModel(u3ImageCount, ContentImageType.U3);
 
-            GenerateImageTypePlaylists(ContentImageType.TFT, workspaceSbnexgen, tftPlaylist);
+            /*GenerateImageTypePlaylists(ContentImageType.TFT, workspaceSbnexgen, tftPlaylist);
             GenerateImageTypePlaylists(ContentImageType.U2, workspaceSbnexgen, u2Playlist);
             GenerateImageTypePlaylists(ContentImageType.U3, workspaceSbnexgen, u3Playlist);
 
             // TO DO: Move this part to the back end from here.
             filehandler.SplitBuildIntoArtAndSnd(workspaceSbnexgen);
-            filehandler.ZipNewBuild(CompletedBuildOutputPath);
+            filehandler.ZipNewBuild(CompletedBuildOutputPath);*/
 
+            var outputService = new OutputService(CompletedBuildOutputPath);
+            outputService.GenerateXmlPlaylists(ContentImageType.TFT, tftPlaylist, workspaceSbnexgen);
+            outputService.GenerateXmlPlaylists(ContentImageType.U2, u2Playlist, workspaceSbnexgen);
+            outputService.GenerateXmlPlaylists(ContentImageType.U3, u3Playlist, workspaceSbnexgen);
+            
+            outputService.SaveCompletedBuildZip(workspaceSbnexgen);
+            
             Cursor = Cursors.Default;
             MessageBox.Show($"Build complete.\nSaved to: {CompletedBuildOutputPath}");
         }
