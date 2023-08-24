@@ -16,4 +16,10 @@
     <Folder Include="NewImages\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="icons\icons8-copy-100.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

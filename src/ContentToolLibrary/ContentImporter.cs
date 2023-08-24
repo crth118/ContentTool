@@ -13,7 +13,7 @@ namespace ContentToolLibrary
     /// </summary>
     public class ContentImporter
     {
-        // Default ContentPath
+        // Default ContentPaths
         public string CurrentContentPath { get; set; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CurrentContent/sbnexgen2");
         public string NewImagesPath { get; set; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NewImages");
         public Dictionary<string, int> Resolutions { get; set; }
@@ -23,10 +23,6 @@ namespace ContentToolLibrary
             Resolutions = SetResolutionsDictionary();
         }
         
-        /// <summary>
-        /// Get all the images that make up the new content build.
-        /// </summary>
-        /// <returns>A list of content Images</returns>
         public List<ContentImage> GetAllImages()
         {
             var imageList = new List<ContentImage>();
