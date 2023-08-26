@@ -1,11 +1,13 @@
 using ContentToolLibrary;
 using ContentToolLibrary.Models;
 using ImageMagick;
+using Microsoft.Extensions.Configuration;
 
 namespace ContentToolUI
 {
     public partial class MainPage : Form
     {
+        public IConfigurationRoot Config;
         private readonly ContentImporter _importer = new();
         private readonly string ImageInfoContainer = "imageInfoContainer";
         private readonly string ImageTypeControlName = "imageType";
@@ -22,18 +24,19 @@ namespace ContentToolUI
         private int U2imagecount { get; set; }
         private int U3imagecount { get; set; }
 
-        public MainPage()
+        public MainPage(IConfigurationRoot config)
         {
+            Config = config;
             InitializeComponent();
         }
-        
+
         private void MainPage_Load(object sender, EventArgs e)
         {
-            currentContentPath.Text = _importer.CurrentContentPath;
-            newImagesPath.Text = _importer.NewImagesPath;
-            CompletedBuildOutputPath = outputPathTextBox.Text;
+            currentContentPath.Text = Config["CurrentContent"];
+            newImagesPath.Text = Config["NewImages"];
+            CompletedBuildOutputPath = Config["OutputDirectory"];
         }
-        
+
         private void loadImagesButton_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
@@ -79,45 +82,45 @@ namespace ContentToolUI
             tftImageContainer.ResumeLayout();
             u2ImageContainer.ResumeLayout();
             u3ImageContainer.ResumeLayout();
-            
+
             Cursor = Cursors.Default;
 
             loadImagesButton.Enabled = false;
             refreshButton.Enabled = true;
             createContentBuildButton.Enabled = true;
         }
-        
+
         private void createContentBuildButton_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            
+
             var filehandler = new FileHandler();
-            
+
             // .workspace/sbnexgen2 is where the new build will be put together and generated
             filehandler.CopyDirectory(currentContentPath.Text, filehandler.WorkSpaceSbnexgen, false);
             filehandler.CopyDirectory(newImagesPath.Text, filehandler.WorkSpaceSbnexgen, false);
-            
+
             var files = new DirectoryInfo(filehandler.WorkSpaceSbnexgen).GetFiles("*.jpg");
             foreach (var file in files)
             {
                 ImageCompressor.CompressImage(file.FullName);
             }
-            
+
             var tftPlaylist = CreatePlaylistModel(TFTimagecount, ContentImageType.TFT);
             var u2Playlist = CreatePlaylistModel(U2imagecount, ContentImageType.U2);
             var u3Playlist = CreatePlaylistModel(U3imagecount, ContentImageType.U3);
-            
+
             var outputService = new OutputService(CompletedBuildOutputPath);
             outputService.GenerateXmlPlaylists(ContentImageType.TFT, tftPlaylist, filehandler.WorkSpaceSbnexgen);
             outputService.GenerateXmlPlaylists(ContentImageType.U2, u2Playlist, filehandler.WorkSpaceSbnexgen);
             outputService.GenerateXmlPlaylists(ContentImageType.U3, u3Playlist, filehandler.WorkSpaceSbnexgen);
-            
+
             // TO DO: Move to back end
             if (Path.Exists(outputService.CompletedBuildFullPath))
             {
                 var msg = $"{outputService.CompletedBuildFullPath} already exists. Do you want to override current zip?";
                 var dialog = MessageBox.Show(msg, "Build already exists", MessageBoxButtons.YesNo);
-                
+
                 if (dialog == DialogResult.Yes)
                 {
                     File.Delete(outputService.CompletedBuildFullPath);
@@ -139,7 +142,7 @@ namespace ContentToolUI
                 MessageBox.Show($"Build complete.\nSaved to: {outputService.CompletedBuildFullPath}");
             }
         }
-        
+
         private XMLPlaylistModel.Playlist CreatePlaylistModel(int imageCount, ContentImageType imageType)
         {
             var content = new List<XMLPlaylistModel.Playlist.PlaylistContent>();

@@ -56,12 +56,18 @@
             u3ImageContainer = new FlowLayoutPanel();
             u3label = new Label();
             toolTip1 = new ToolTip(components);
+            menuStrip1 = new MenuStrip();
+            optionsToolStripMenuItem = new ToolStripMenuItem();
+            optionsMenuItem = new ToolStripMenuItem();
+            exitToolStripMenuItem = new ToolStripMenuItem();
+            contextMenuStrip1 = new ContextMenuStrip(components);
             mainContainer.SuspendLayout();
             headerContainer.SuspendLayout();
             tftImageContainer.SuspendLayout();
             headersTFT.SuspendLayout();
             u2ImageContainer.SuspendLayout();
             u3ImageContainer.SuspendLayout();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // mainContainer
@@ -71,7 +77,7 @@
             mainContainer.Controls.Add(tftImageContainer);
             mainContainer.Controls.Add(u2ImageContainer);
             mainContainer.Controls.Add(u3ImageContainer);
-            mainContainer.Location = new Point(12, 12);
+            mainContainer.Location = new Point(6, 27);
             mainContainer.MaximumSize = new Size(1156, 0);
             mainContainer.MinimumSize = new Size(1156, 900);
             mainContainer.Name = "mainContainer";
@@ -379,6 +385,43 @@
             u3label.TabIndex = 2;
             u3label.Text = "U3 Images";
             // 
+            // menuStrip1
+            // 
+            menuStrip1.AllowDrop = true;
+            menuStrip1.BackColor = SystemColors.ControlDark;
+            menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(1174, 24);
+            menuStrip1.TabIndex = 1;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { optionsMenuItem, exitToolStripMenuItem });
+            optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            optionsToolStripMenuItem.Size = new Size(37, 20);
+            optionsToolStripMenuItem.Text = "File";
+            // 
+            // optionsMenuItem
+            // 
+            optionsMenuItem.BackColor = SystemColors.ActiveBorder;
+            optionsMenuItem.Name = "optionsMenuItem";
+            optionsMenuItem.Size = new Size(180, 22);
+            optionsMenuItem.Text = "Options";
+            // 
+            // exitToolStripMenuItem
+            // 
+            exitToolStripMenuItem.BackColor = SystemColors.ActiveBorder;
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Text = "Exit";
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(181, 26);
+            // 
             // MainPage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -387,6 +430,8 @@
             BackColor = SystemColors.ActiveBorder;
             ClientSize = new Size(1174, 927);
             Controls.Add(mainContainer);
+            Controls.Add(menuStrip1);
+            MainMenuStrip = menuStrip1;
             Name = "MainPage";
             Text = "Form1";
             Load += MainPage_Load;
@@ -402,6 +447,8 @@
             u2ImageContainer.PerformLayout();
             u3ImageContainer.ResumeLayout(false);
             u3ImageContainer.PerformLayout();
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -436,5 +483,10 @@
         private TextBox outputPathTextBox;
         private Label outputPathLabel;
         private Button changeOutputDirButton;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem optionsToolStripMenuItem;
+        private ToolStripMenuItem optionsMenuItem;
+        private ToolStripMenuItem exitToolStripMenuItem;
+        private ContextMenuStrip contextMenuStrip1;
     }
 }
