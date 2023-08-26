@@ -14,7 +14,7 @@ namespace ContentToolUI
             }
         }
         
-        private void SetDurationsForAll(int imageCount, int index, ContentImageType imageType)
+        private void SetDurationsForAll(int index, ContentImageType imageType)
         {
             var newDuration = Controls.Find($"{imageType}{ImageDurationControlName}{index}", true).First().Text;
             for (int i = 0; i <= TFTimagecount; i++)

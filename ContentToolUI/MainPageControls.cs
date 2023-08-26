@@ -213,13 +213,13 @@ namespace ContentToolUI
                 switch (imageType)
                 {
                     case ContentImageType.TFT:
-                        SetDurationsForAll(TFTimagecount, index, ContentImageType.TFT);
+                        SetDurationsForAll(index, ContentImageType.TFT);
                         break;
                     case ContentImageType.U2:
-                        SetDurationsForAll(U2imagecount, index, ContentImageType.U2);
+                        SetDurationsForAll(index, ContentImageType.U2);
                         break;
                     case ContentImageType.U3:
-                        SetDurationsForAll(U3imagecount, index, ContentImageType.U3);
+                        SetDurationsForAll(index, ContentImageType.U3);
                         break;
                 }
             };
