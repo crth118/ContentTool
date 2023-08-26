@@ -1,13 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using ContentToolLibrary;
+using ContentToolLibrary.Models;
 
 namespace ContentToolUI
 {
@@ -67,9 +60,27 @@ namespace ContentToolUI
 
         private void saveOptionsButton_Click(object sender, EventArgs e)
         {
-            Config["OutputDirectory"] = OutputPath;
-            Config["CurrentContent"] = CurrentContentPath;
-            Config["NewImages"] = NewImagesPath;
+            var settings = new SettingsModel()
+            {
+                CurrentContent = CurrentContentPath,
+                NewImages = NewImagesPath,
+                OutputDirectory = OutputPath
+            };
+
+            try
+            {
+                var settingsFile = $"{AppDomain.CurrentDomain.BaseDirectory}\\settings.json";
+                JsonSerializationService.WriteToJsonFile(settingsFile, settings, false);
+
+                MessageBox.Show("User settings saved. Refresh main window for changes to take effect.", "Informational Message", MessageBoxButtons.OK);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Unhandled exception: {ex.Message}", "ERROR", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
+            
+            Close();
         }
     }
 }
