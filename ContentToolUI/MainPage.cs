@@ -35,6 +35,7 @@ namespace ContentToolUI
             currentContentPath.Text = Config["CurrentContent"];
             newImagesPath.Text = Config["NewImages"];
             CompletedBuildOutputPath = Config["OutputDirectory"];
+            SetIcons();
         }
 
         private void loadImagesButton_Click(object sender, EventArgs e)
@@ -184,6 +185,12 @@ namespace ContentToolUI
             playlist.Content = content;
 
             return playlist;
+        }
+
+        private void optionsMenuItem_Click(object sender, EventArgs e)
+        {
+            var options = new OptionsPage(Config);
+            options.Show();
         }
     }
 }

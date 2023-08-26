@@ -199,7 +199,7 @@ namespace ContentToolUI
         {
             var button = new Button()
             {
-                Image = Image.FromFile(".\\icons\\icons8-copy-100.png").GetThumbnailImage(10, 10, null, IntPtr.Zero),
+                Image = Image.FromFile(".\\icons\\copy-document.png").GetThumbnailImage(10, 10, null, IntPtr.Zero),
                 ImageAlign = ContentAlignment.MiddleCenter,
                 Size = new Size(17, 17),
                 Margin = new Padding(0, 5, 0, 0),

@@ -409,6 +409,7 @@
             optionsMenuItem.Name = "optionsMenuItem";
             optionsMenuItem.Size = new Size(180, 22);
             optionsMenuItem.Text = "Options";
+            optionsMenuItem.Click += optionsMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
@@ -420,7 +421,7 @@
             // contextMenuStrip1
             // 
             contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(181, 26);
+            contextMenuStrip1.Size = new Size(61, 4);
             // 
             // MainPage
             // 

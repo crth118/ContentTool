@@ -35,5 +35,20 @@ namespace ContentToolUI
                 duration.Text = newDuration;
             }
         }
+
+        private void SetIcons()
+        {
+            changeOutputDirButton.Image = Image.FromFile(".\\icons\\folder-search.png")
+                .GetThumbnailImage(15, 15, null, IntPtr.Zero);
+            changeOutputDirButton.ImageAlign = ContentAlignment.MiddleCenter;
+            
+            changeCurrentContentDirButton.Image = Image.FromFile(".\\icons\\folder-search.png")
+                .GetThumbnailImage(15, 15, null, IntPtr.Zero);
+            changeCurrentContentDirButton.ImageAlign = ContentAlignment.MiddleCenter;
+            
+            changeNewImagesDirButton.Image = Image.FromFile(".\\icons\\folder-search.png")
+                .GetThumbnailImage(15, 15, null, IntPtr.Zero);
+            changeNewImagesDirButton.ImageAlign = ContentAlignment.MiddleCenter;
+        }
     }
 }
