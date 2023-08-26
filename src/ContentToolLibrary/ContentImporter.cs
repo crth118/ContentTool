@@ -28,13 +28,23 @@ namespace ContentToolLibrary
             var imageList = new List<ContentImage>();
 
             var currentImages = new DirectoryInfo(CurrentContentPath).GetFiles("*.jpg");
-            foreach (var file in currentImages)
+            var newImages = new DirectoryInfo(NewImagesPath).GetFiles("*.jpg");
+            
+            AddImagesTypeList(currentImages, imageList);
+            AddImagesTypeList(newImages, imageList);
+
+            return imageList;
+        }
+
+        private void AddImagesTypeList(FileInfo[] files, List<ContentImage> imageList)
+        {
+            foreach (var file in files)
             {
                 using (var imageFile = Image.FromFile(file.FullName))
                 {
                     var height = imageFile.Height;
                     var width = imageFile.Width;
-
+                    
                     if (IsTFTImage(height, width))
                     {
                         imageList.Add(new ContentImage(ContentImageType.TFT, file.Name));
@@ -51,8 +61,6 @@ namespace ContentToolLibrary
                     }
                 }
             }
-
-            return imageList;
         }
 
         private bool IsTFTImage(int imageHeight, int imageWidth)
