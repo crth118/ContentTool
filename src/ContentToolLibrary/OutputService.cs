@@ -7,10 +7,13 @@ namespace ContentToolLibrary
         public string OutputLocation { get; set; }
         private readonly string _busyAttractPlaylist = "{0}/playlist_{1}_busyAttract.xml";
         private readonly string _idleAttractPlaylist = "{0}/playlist_{1}_idleAttract.xml";
+        public readonly string CompletedBuildName = "CompletedBuild.zip";
+        public readonly string CompletedBuildFullPath;
 
         public OutputService(string outputLocation)
         {
             OutputLocation = outputLocation;
+            CompletedBuildFullPath = $"{OutputLocation}\\{CompletedBuildName}";
         }
         
         public void SaveCompletedBuildZip(string targetToBuild)
@@ -18,7 +21,7 @@ namespace ContentToolLibrary
             var fileHandler = new FileHandler();
             
             fileHandler.SplitBuildIntoArtAndSnd(targetToBuild);
-            fileHandler.ZipNewBuild(OutputLocation);
+            fileHandler.ZipNewBuild(OutputLocation, CompletedBuildName);
             fileHandler.CleanupWorkspace();
         }
 

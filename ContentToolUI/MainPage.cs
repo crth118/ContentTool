@@ -112,10 +112,32 @@ namespace ContentToolUI
             outputService.GenerateXmlPlaylists(ContentImageType.U2, u2Playlist, filehandler.WorkSpaceSbnexgen);
             outputService.GenerateXmlPlaylists(ContentImageType.U3, u3Playlist, filehandler.WorkSpaceSbnexgen);
             
-            outputService.SaveCompletedBuildZip(filehandler.WorkSpaceSbnexgen);
-            
-            Cursor = Cursors.Default;
-            MessageBox.Show($"Build complete.\nSaved to: {CompletedBuildOutputPath}");
+            // TO DO: Move to back end
+            if (Path.Exists(outputService.CompletedBuildFullPath))
+            {
+                var msg = $"{outputService.CompletedBuildFullPath} already exists. Do you want to override current zip?";
+                var dialog = MessageBox.Show(msg, "Build already exists", MessageBoxButtons.YesNo);
+                
+                if (dialog == DialogResult.Yes)
+                {
+                    File.Delete(outputService.CompletedBuildFullPath);
+                    outputService.SaveCompletedBuildZip(filehandler.WorkSpaceSbnexgen);
+                    Cursor = Cursors.Default;
+                    MessageBox.Show($"Build complete.\nSaved to: {outputService.CompletedBuildFullPath}");
+                }
+                else if (dialog == DialogResult.No)
+                {
+                    MessageBox.Show("Build aborted.");
+                    filehandler.CleanupWorkspace();
+                    Cursor = Cursors.Default;
+                }
+            }
+            else
+            {
+                outputService.SaveCompletedBuildZip(filehandler.WorkSpaceSbnexgen);
+                Cursor = Cursors.Default;
+                MessageBox.Show($"Build complete.\nSaved to: {outputService.CompletedBuildFullPath}");
+            }
         }
         
         private XMLPlaylistModel.Playlist CreatePlaylistModel(int imageCount, ContentImageType imageType)

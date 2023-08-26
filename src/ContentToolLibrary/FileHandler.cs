@@ -15,6 +15,7 @@ namespace ContentToolLibrary
         public readonly string WorkSpaceSbnexgen;
         private readonly string _artDirPath;
         private readonly string _sndDirPath;
+        
 
         public FileHandler()
         {
@@ -89,9 +90,9 @@ namespace ContentToolLibrary
             }
         }
 
-        public void ZipNewBuild(string outputPath)
+        public void ZipNewBuild(string outputPath, string fileName)
         {
-            ZipFile.CreateFromDirectory(WorkSpace, $"{outputPath}\\CompletedBuild.zip", CompressionLevel.SmallestSize, false);
+            ZipFile.CreateFromDirectory(WorkSpace, $"{outputPath}\\{fileName}", CompressionLevel.SmallestSize, false);
         }
 
         /// <summary>
