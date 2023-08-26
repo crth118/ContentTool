@@ -93,5 +93,27 @@ namespace ContentToolLibrary
         {
             ZipFile.CreateFromDirectory(WorkSpace, $"{outputPath}\\CompletedBuild.zip", CompressionLevel.SmallestSize, false);
         }
+
+        /// <summary>
+        /// Remove files and folders from the Workspace directory created during new content build creation
+        /// </summary>
+        public void CleanupWorkspace()
+        {
+            if (Path.Exists(_artDirPath))
+            {
+                Directory.Delete(_artDirPath, true);
+            }
+            
+            if (Path.Exists(_sndDirPath))
+            {
+                Directory.Delete(_sndDirPath, true);
+            }
+
+            var files = new DirectoryInfo(WorkSpaceSbnexgen).GetFiles();
+            foreach (var file in files)
+            {
+                file.Delete();
+            }
+        }
     }
 }

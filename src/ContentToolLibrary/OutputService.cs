@@ -16,8 +16,10 @@ namespace ContentToolLibrary
         public void SaveCompletedBuildZip(string targetToBuild)
         {
             var fileHandler = new FileHandler();
+            
             fileHandler.SplitBuildIntoArtAndSnd(targetToBuild);
             fileHandler.ZipNewBuild(OutputLocation);
+            fileHandler.CleanupWorkspace();
         }
 
         public void GenerateXmlPlaylists(ContentImageType imageType, XMLPlaylistModel.Playlist playlist,
