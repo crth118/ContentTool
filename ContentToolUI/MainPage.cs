@@ -125,13 +125,15 @@ namespace ContentToolUI
             {
                 ErrorMessages.AddRange(validation.ErrorMessages);
 
-                var msg = $"Could not complete build. The following errors were found:\n";
+                var msg = $"Could not complete build. The following errors were found:";
                 foreach (var message in ErrorMessages)
                 {
-                    msg += $"\n{message}";
+                    msg += $"\n\n{message}";
                 }
 
-                MessageBox.Show(msg, "Oh no...", MessageBoxButtons.OK);
+                MessageBox.Show(msg, "Errors", MessageBoxButtons.OK);
+                Cursor = Cursors.Default;
+                return;
             }
 
             var contentBuilder = new ContentBuilder(CompletedBuildOutputPath)

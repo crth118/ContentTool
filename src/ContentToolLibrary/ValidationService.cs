@@ -53,7 +53,7 @@ namespace ContentToolLibrary
             var culture = CultureInfo.CurrentCulture;
             
             var newStartDate = DateTime.ParseExact(startDate, format, culture);
-            var newStopDate = DateTime.ParseExact(startDate, format, culture);
+            var newStopDate = DateTime.ParseExact(stopDate, format, culture);
 
             return DateTime.Compare(newStartDate, newStopDate);
         }
@@ -71,7 +71,7 @@ namespace ContentToolLibrary
                 {
                     if (!IsValidSlideDuration(entry.Duration))
                     {
-                        var msg = $"Invalid slide duration for {entry.Path}";
+                        var msg = $"Invalid slide duration for '{entry.Path}'";
                         ErrorMessages.Add(msg);
                     }
 
@@ -80,29 +80,32 @@ namespace ContentToolLibrary
                         continue;
                     }
 
+                    if (IsValidDate(entry.StartDate) && IsValidDate(entry.StopDate))
+                    {
+                        var dateCompare = CompareDates(entry.StartDate, entry.StopDate);
+                        if (dateCompare == 0 || dateCompare > 0)
+                        {
+                            var msg = $"Invalid dates for '{entry.Path}': Start Date '{entry.StartDate}' is after or equal to '{entry.StopDate}'." +
+                                      $"The start date must be BEFORE the stop date";
+                            ErrorMessages.Add(msg);
+                        }
+                    }
+
                     if (!IsValidDate(entry.StartDate))
                     {
-                        var msg = $"Invalid start date for {entry.Path}";
+                        var msg = $"Invalid start date for '{entry.Path}'";
                         ErrorMessages.Add(msg);
                     }
 
                     if (!IsValidDate(entry.StopDate))
                     {
-                        var msg = $"Invalid stop date for {entry.Path}";
-                        ErrorMessages.Add(msg);
-                    }
-
-                    var dateCompare = CompareDates(entry.StartDate, entry.StopDate);
-                    if (dateCompare == 0 || dateCompare > 0)
-                    {
-                        var msg = $"{entry.StartDate} is at or equal to {entry.StopDate}." +
-                                  $"The start date must be BEFORE the stop date";
+                        var msg = $"Invalid stop date for '{entry.Path}'";
                         ErrorMessages.Add(msg);
                     }
                 }    
             }
 
-            return ErrorMessages.Any();
+            return !ErrorMessages.Any();
         }
     }
 }
