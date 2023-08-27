@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Configuration;
+
 namespace ContentToolUI
 {
     internal static class Program
@@ -11,7 +13,14 @@ namespace ContentToolUI
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainPage());
+
+            var configBuilder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("settings.json", optional: false);
+            
+            var config = configBuilder.Build();
+            
+            Application.Run(new MainPage(config));
         }
     }
 }
