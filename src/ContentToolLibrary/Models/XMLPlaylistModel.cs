@@ -33,11 +33,24 @@ namespace ContentToolLibrary.Models
                 [XmlAttribute(AttributeName = "duration")]
                 public string? Duration { get; set; }
                 
-                [XmlAttribute(AttributeName = "startDate")]
-                public string? StartDate { get; set; }
-                
-                [XmlAttribute(AttributeName = "stopDate")]
-                public string? StopDate { get; set; }
+                [XmlElement(ElementName = "schedule")]
+                public List<PlaylistSchedule>? Schedule { get; set; }
+
+                [XmlRoot(ElementName = "schedule")]
+                public class PlaylistSchedule
+                {
+                    [XmlAttribute(AttributeName = "type")]
+                    public string? Type = "on";
+
+                    [XmlAttribute(AttributeName = "repeatType")]
+                    public string? RepeatType = "setperiod";
+                    
+                    [XmlAttribute(AttributeName = "startDate")]
+                    public string? StartDate { get; set; }
+                    
+                    [XmlAttribute(AttributeName = "stopDate")]
+                    public string? StopDate { get; set; }
+                }
             }
         }
     }

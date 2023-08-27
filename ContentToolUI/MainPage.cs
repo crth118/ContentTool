@@ -210,8 +210,20 @@ namespace ContentToolUI
                 var useDates = Controls.Find($"{imageType}{UseDatesCheckboxControlName}{i}", true).First() as CheckBox;
                 if (useDates.Checked)
                 {
-                    xmlEntry.StartDate = Controls.Find($"{imageType}{ImageStartDateControlName}{i}", true).First().Text;
-                    xmlEntry.StopDate = Controls.Find($"{imageType}{ImageStopDateControlName}{i}", true).First().Text;
+                    var schedule = new List<XMLPlaylistModel.Playlist.PlaylistContent.PlaylistSchedule>();
+                    
+                    var startDate = Controls.Find($"{imageType}{ImageStartDateControlName}{i}", true).First().Text;
+                    var stopDate  = Controls.Find($"{imageType}{ImageStopDateControlName}{i}", true).First().Text;
+
+                    var scheduleEntry = new XMLPlaylistModel.Playlist.PlaylistContent.PlaylistSchedule()
+                    {
+                        StartDate = startDate,
+                        StopDate = stopDate
+                    };
+                    
+                    schedule.Add(scheduleEntry);
+
+                    xmlEntry.Schedule = schedule;
                 }
 
                 content.Add(xmlEntry);
