@@ -22,11 +22,6 @@ namespace ContentToolLibrary
 
         public void GenerateNewContentBuild(string destination)
         {
-            var allPlaylists = new List<XMLPlaylistModel.Playlist>();
-            allPlaylists.Add(tftplaylist);
-            allPlaylists.Add(u2playlist);
-            allPlaylists.Add(u3playlist);
-            
             GenerateXmlPlaylists(ContentImageType.TFT, tftplaylist, destination);
             GenerateXmlPlaylists(ContentImageType.U2, u2playlist, destination);
             GenerateXmlPlaylists(ContentImageType.U3, u3playlist, destination);

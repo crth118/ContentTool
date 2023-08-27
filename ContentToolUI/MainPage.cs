@@ -119,12 +119,11 @@ namespace ContentToolUI
             allPlaylists.Add(tftPlaylist);
             allPlaylists.Add(u2Playlist);
             allPlaylists.Add(u3Playlist);
-
-            var validate = new ValidationService();
-            var help = validate.AreValidPlaylists(allPlaylists);
-            if (!validate.AreValidPlaylists(allPlaylists))
+            
+            var validation = new ValidationService();
+            if (!validation.AreValidPlaylists(allPlaylists))
             {
-                ErrorMessages.AddRange(validate.ErrorMessages);
+                ErrorMessages.AddRange(validation.ErrorMessages);
 
                 var msg = $"Could not complete build. The following errors were found:\n";
                 foreach (var message in ErrorMessages)
@@ -133,29 +132,28 @@ namespace ContentToolUI
                 }
 
                 MessageBox.Show(msg, "Oh no...", MessageBoxButtons.OK);
-                return;
             }
 
-            var contentBuider = new ContentBuilder(CompletedBuildOutputPath)
+            var contentBuilder = new ContentBuilder(CompletedBuildOutputPath)
             {
                 tftplaylist = tftPlaylist,
                 u2playlist = u2Playlist,
                 u3playlist = u3Playlist
             };
-            contentBuider.GenerateNewContentBuild(filehandler.WorkSpaceSbnexgen);
+            contentBuilder.GenerateNewContentBuild(filehandler.WorkSpaceSbnexgen);
 
             // TO DO: Move to back end
-            if (Path.Exists(contentBuider.CompletedBuildFullPath))
+            if (Path.Exists(contentBuilder.CompletedBuildFullPath))
             {
-                var msg = $"{contentBuider.CompletedBuildFullPath} already exists. Do you want to override current zip?";
+                var msg = $"{contentBuilder.CompletedBuildFullPath} already exists. Do you want to override current zip?";
                 var dialog = MessageBox.Show(msg, "Build already exists", MessageBoxButtons.YesNo);
 
                 if (dialog == DialogResult.Yes)
                 {
-                    File.Delete(contentBuider.CompletedBuildFullPath);
-                    contentBuider.SaveCompletedBuildZip(filehandler.WorkSpaceSbnexgen);
+                    File.Delete(contentBuilder.CompletedBuildFullPath);
+                    contentBuilder.SaveCompletedBuildZip(filehandler.WorkSpaceSbnexgen);
                     Cursor = Cursors.Default;
-                    MessageBox.Show($"Build complete.\nSaved to: {contentBuider.CompletedBuildFullPath}");
+                    MessageBox.Show($"Build complete.\nSaved to: {contentBuilder.CompletedBuildFullPath}");
                 }
                 else if (dialog == DialogResult.No)
                 {
@@ -166,9 +164,9 @@ namespace ContentToolUI
             }
             else
             {
-                contentBuider.SaveCompletedBuildZip(filehandler.WorkSpaceSbnexgen);
+                contentBuilder.SaveCompletedBuildZip(filehandler.WorkSpaceSbnexgen);
                 Cursor = Cursors.Default;
-                MessageBox.Show($"Build complete.\nSaved to: {contentBuider.CompletedBuildFullPath}");
+                MessageBox.Show($"Build complete.\nSaved to: {contentBuilder.CompletedBuildFullPath}");
             }
         }
 

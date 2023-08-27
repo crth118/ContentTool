@@ -10,7 +10,7 @@ namespace ContentToolLibrary
 {
     public class ValidationService
     {
-        public List<string> ErrorMessages = new List<string>();
+        public List<string> ErrorMessages = new();
         
         /// <summary>
         /// Confirms directory path exists
