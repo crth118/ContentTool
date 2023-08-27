@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace ContentToolUI
 {
@@ -15,18 +11,62 @@ namespace ContentToolUI
         public static Color TextBoxForeColor{ get; set; }
         public static Color ButtonForeColor { get; set; }
         public static Color ButtonBackColor { get; set; }
+        public static Color CreateBuildButtonBackColor { get; set; }
+        public static Color CreateBuildButtonForeColor { get; set; }
+        
+        // Dark Color Scheme
+        public static Color DarkBlack = Color.FromArgb(44, 47, 51);
+        public static Color LightBlack = Color.FromArgb(44, 47, 51);
+        public static Color MidGray = Color.FromArgb(153, 170, 181);
+        public static Color PaleBlue = Color.FromArgb(114, 137, 218);
+        public static Color BoneWhite = Color.FromArgb(249, 246, 238);
+        
+        // Light Color Scheme
+        public static Color LightGray = Color.FromArgb(192, 192, 192);
+        public static Color PaleYellow = Color.FromArgb(254, 250, 224);
 
-
-        public static void SetTabcorpColors()
+        public static void ApplyColorScheme(Control.ControlCollection controls, ColorSchemeType colorScheme)
         {
-            FormBackColor = Color.AntiqueWhite;
-            LabelForeColor = Color.Blue;
-            TextBoxBackColor = Color.Blue;
-            TextBoxForeColor = Color.WhiteSmoke;
-            ButtonForeColor = Color.WhiteSmoke;
-            ButtonBackColor = Color.Blue;
+            switch (colorScheme)
+            {
+                case ColorSchemeType.Dark:
+                    SetDarkColorScheme();
+                    break;
+                case ColorSchemeType.Light:
+                    SetLightColorScheme();
+                    break;
+            }
+            
+            foreach (Control c in controls)
+            {
+                UpdateColorControls(c);
+            }
         }
 
+        public static void SetLightColorScheme()
+        {
+            FormBackColor = LightGray;
+            LabelForeColor = Color.Black;
+            TextBoxBackColor = PaleYellow;
+            TextBoxForeColor = Color.Black;
+            ButtonForeColor = Color.Black;
+            ButtonBackColor = LightGray;
+            CreateBuildButtonForeColor = Color.WhiteSmoke;
+            CreateBuildButtonBackColor = PaleBlue;
+        }
+        
+        public static void SetDarkColorScheme()
+        {
+            FormBackColor = DarkBlack;
+            LabelForeColor = BoneWhite;
+            TextBoxBackColor = MidGray;
+            TextBoxForeColor = LightBlack;
+            ButtonForeColor = BoneWhite;
+            ButtonBackColor = LightBlack;
+            CreateBuildButtonForeColor = DarkBlack;
+            CreateBuildButtonBackColor = PaleBlue;
+        }
+        
         public static void UpdateColorControls(Control myControl)
         {
             if (myControl is TextBox)
@@ -56,9 +96,7 @@ namespace ContentToolUI
 
     public enum ColorSchemeType
     {
-        Tabcorp,
-        MaxSys,
-        Discord,
-        OldSchool
+        Light,
+        Dark
     }
 }

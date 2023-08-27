@@ -7,6 +7,7 @@ namespace ContentToolUI
 {
     public partial class MainPage : Form
     {
+        public ColorSchemeType AppliedColorScheme;
         public IConfigurationRoot Config;
         private readonly ContentImporter _importer = new();
         private readonly string ImageInfoContainer = "imageInfoContainer";
@@ -36,6 +37,9 @@ namespace ContentToolUI
             currentContentPath.Text = Config["CurrentContent"];
             newImagesPath.Text = Config["NewImages"];
             outputPathTextBox.Text = Config["OutputDirectory"];
+            //AppliedColorScheme = Enum.Parse<ColorSchemeType>(Config["ColorScheme"]);
+            //ColorScheme.ApplyColorScheme(Controls, AppliedColorScheme);
+            //BackColor = ColorScheme.FormBackColor;
             SetIcons();
         }
 
