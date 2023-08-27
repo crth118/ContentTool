@@ -114,23 +114,31 @@ namespace ContentToolUI
             var u2Playlist = CreatePlaylistModel(U2imagecount, ContentImageType.U2);
             var u3Playlist = CreatePlaylistModel(U3imagecount, ContentImageType.U3);
 
-            var outputService = new OutputService(CompletedBuildOutputPath);
-            outputService.GenerateXmlPlaylists(ContentImageType.TFT, tftPlaylist, filehandler.WorkSpaceSbnexgen);
-            outputService.GenerateXmlPlaylists(ContentImageType.U2, u2Playlist, filehandler.WorkSpaceSbnexgen);
-            outputService.GenerateXmlPlaylists(ContentImageType.U3, u3Playlist, filehandler.WorkSpaceSbnexgen);
+            var allPlaylists = new List<XMLPlaylistModel.Playlist>();
+            allPlaylists.Add(tftPlaylist);
+            allPlaylists.Add(u2Playlist);
+            allPlaylists.Add(u3Playlist);
+
+            var contentBuider = new ContentBuilder(CompletedBuildOutputPath)
+            {
+                tftplaylist = tftPlaylist,
+                u2playlist = u2Playlist,
+                u3playlist = u3Playlist
+            };
+            contentBuider.GenerateNewContentBuild(filehandler.WorkSpaceSbnexgen);
 
             // TO DO: Move to back end
-            if (Path.Exists(outputService.CompletedBuildFullPath))
+            if (Path.Exists(contentBuider.CompletedBuildFullPath))
             {
-                var msg = $"{outputService.CompletedBuildFullPath} already exists. Do you want to override current zip?";
+                var msg = $"{contentBuider.CompletedBuildFullPath} already exists. Do you want to override current zip?";
                 var dialog = MessageBox.Show(msg, "Build already exists", MessageBoxButtons.YesNo);
 
                 if (dialog == DialogResult.Yes)
                 {
-                    File.Delete(outputService.CompletedBuildFullPath);
-                    outputService.SaveCompletedBuildZip(filehandler.WorkSpaceSbnexgen);
+                    File.Delete(contentBuider.CompletedBuildFullPath);
+                    contentBuider.SaveCompletedBuildZip(filehandler.WorkSpaceSbnexgen);
                     Cursor = Cursors.Default;
-                    MessageBox.Show($"Build complete.\nSaved to: {outputService.CompletedBuildFullPath}");
+                    MessageBox.Show($"Build complete.\nSaved to: {contentBuider.CompletedBuildFullPath}");
                 }
                 else if (dialog == DialogResult.No)
                 {
@@ -141,9 +149,9 @@ namespace ContentToolUI
             }
             else
             {
-                outputService.SaveCompletedBuildZip(filehandler.WorkSpaceSbnexgen);
+                contentBuider.SaveCompletedBuildZip(filehandler.WorkSpaceSbnexgen);
                 Cursor = Cursors.Default;
-                MessageBox.Show($"Build complete.\nSaved to: {outputService.CompletedBuildFullPath}");
+                MessageBox.Show($"Build complete.\nSaved to: {contentBuider.CompletedBuildFullPath}");
             }
         }
 

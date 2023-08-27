@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
+using ContentToolLibrary.Models;
 
 namespace ContentToolLibrary
 {
@@ -39,6 +41,52 @@ namespace ContentToolLibrary
             catch
             {
                 return false;
+            }
+        }
+
+        private int CompareDates(string startDate, string stopDate)
+        {
+            var format = "yyyy-MM-dd";
+            var culture = CultureInfo.CurrentCulture;
+            
+            var newStartDate = DateTime.ParseExact(startDate, format, culture);
+            var newStopDate = DateTime.ParseExact(startDate, format, culture);
+
+            return DateTime.Compare(newStartDate, newStopDate);
+        }
+
+        public bool ValidateAllPlaylists(List<XMLPlaylistModel.Playlist> allPlaylists)
+        {
+            foreach (var playlist in allPlaylists)
+            {
+                foreach (var entry in playlist.Content)
+                {
+                    if (!IsValidSlideDuration(entry.Duration))
+                    {
+                        //errorlist
+                    }
+
+                    if (entry.StartDate == null && entry.StopDate == null)
+                    {
+                        continue;
+                    }
+
+                    if (!IsValidDate(entry.StartDate))
+                    {
+                        //errorlist
+                    }
+
+                    if (!IsValidDate(entry.StopDate))
+                    {
+                        //errorlist
+                    }
+
+                    var dateCompare = CompareDates(entry.StartDate, entry.StopDate);
+                    if (dateCompare == 0 || dateCompare > 0)
+                    {
+                        //erroList
+                    }
+                }    
             }
         }
     }
