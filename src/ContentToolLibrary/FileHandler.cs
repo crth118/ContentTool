@@ -50,6 +50,24 @@ namespace ContentToolLibrary
                 }
             }
         }
+    
+        /// <summary>
+        /// Copy the current content and new images to the workspace directory to form the new
+        /// content build.
+        /// </summary>
+        /// <param name="currentContentPath">Path to the current content used as a base for the new build</param>
+        /// <param name="newImagesPath">Path to the new images to be added to the current content build</param>
+        public void FormNewBuild(string currentContentPath, string newImagesPath)
+        {
+            CopyDirectory(currentContentPath, WorkSpaceSbnexgen, false);
+            CopyDirectory(newImagesPath, WorkSpaceSbnexgen, false);
+
+            var files = new DirectoryInfo(WorkSpaceSbnexgen).GetFiles("*.jpg");
+            foreach (var file in files)
+            {
+                ImageCompressor.CompressImage(file.FullName);
+            }
+        }
 
         /// <summary>
         /// Split a content build into the ART and SND directories. This is needed for processing by the

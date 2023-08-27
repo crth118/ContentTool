@@ -41,6 +41,8 @@ namespace ContentToolUI
         private void loadImagesButton_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
+            
+            headersTFT.Visible = true;
 
             TFTimagecount = -1;
             U2imagecount = -1;
@@ -49,6 +51,17 @@ namespace ContentToolUI
             tftImageContainer.SuspendLayout();
             u2ImageContainer.SuspendLayout();
             u3ImageContainer.SuspendLayout();
+            
+            try
+            {
+                ValidateDirectories();
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Cursor = Cursors.Default;
+                return;
+            }
 
             var images = _importer.GetAllImages();
             var tft = new List<ContentImage>();
@@ -73,13 +86,11 @@ namespace ContentToolUI
                         break;
                 }
             }
-
-            headersTFT.Visible = true;
-
+            
             DrawImageListDisplay(tft, tftImageContainer);
             DrawImageListDisplay(u2, u2ImageContainer);
             DrawImageListDisplay(u3, u3ImageContainer);
-
+            
             tftImageContainer.ResumeLayout();
             u2ImageContainer.ResumeLayout();
             u3ImageContainer.ResumeLayout();
@@ -96,16 +107,8 @@ namespace ContentToolUI
             Cursor = Cursors.WaitCursor;
 
             var filehandler = new FileHandler();
-
-            // .workspace/sbnexgen2 is where the new build will be put together and generated
-            filehandler.CopyDirectory(currentContentPath.Text, filehandler.WorkSpaceSbnexgen, false);
-            filehandler.CopyDirectory(newImagesPath.Text, filehandler.WorkSpaceSbnexgen, false);
-
-            var files = new DirectoryInfo(filehandler.WorkSpaceSbnexgen).GetFiles("*.jpg");
-            foreach (var file in files)
-            {
-                ImageCompressor.CompressImage(file.FullName);
-            }
+            
+            filehandler.FormNewBuild(currentContentPath.Text, newImagesPath.Text);
 
             var tftPlaylist = CreatePlaylistModel(TFTimagecount, ContentImageType.TFT);
             var u2Playlist = CreatePlaylistModel(U2imagecount, ContentImageType.U2);
@@ -185,12 +188,6 @@ namespace ContentToolUI
             playlist.Content = content;
 
             return playlist;
-        }
-
-        private void optionsMenuItem_Click(object sender, EventArgs e)
-        {
-            var options = new OptionsPage(Config);
-            options.Show();
         }
     }
 }

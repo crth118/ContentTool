@@ -50,5 +50,29 @@ namespace ContentToolUI
                 .GetThumbnailImage(15, 15, null, IntPtr.Zero);
             changeNewImagesDirButton.ImageAlign = ContentAlignment.MiddleCenter;
         }
+
+        private void ValidateDirectories()
+        {
+            if (!Path.Exists(currentContentPath.Text))
+            {
+                var path = currentContentPath.Text;
+                var msg = $"The Current Content Path '{path}' could not be found. Ensure the right directory has been selected.";
+                throw new DirectoryNotFoundException(msg);
+            }
+
+            if (!Path.Exists(newImagesPath.Text))
+            {
+                var path = newImagesPath.Text;
+                var msg = $"The New Images Path '{path}' could not be found. Ensure the right directory has been selected.";
+                throw new DirectoryNotFoundException(msg);
+            }
+
+            if (!Path.Exists(CompletedBuildOutputPath))
+            {
+                var msg = $"The Output Path for the completed build '{CompletedBuildOutputPath}' could not be found. " +
+                          $"Ensure the right directory has been selected.";
+                throw new DirectoryNotFoundException(msg);
+            }
+        }
     }
 }
