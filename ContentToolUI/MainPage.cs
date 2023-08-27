@@ -218,5 +218,10 @@ namespace ContentToolUI
 
             return playlist;
         }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

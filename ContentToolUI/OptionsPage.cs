@@ -79,7 +79,12 @@ namespace ContentToolUI
                 MessageBox.Show($"Unhandled exception: {ex.Message}", "ERROR", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
-            
+
+            Close();
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
             Close();
         }
     }

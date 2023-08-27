@@ -61,6 +61,7 @@
             optionsMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
             contextMenuStrip1 = new ContextMenuStrip(components);
+            aboutToolStripMenuItem = new ToolStripMenuItem();
             mainContainer.SuspendLayout();
             headerContainer.SuspendLayout();
             tftImageContainer.SuspendLayout();
@@ -389,7 +390,7 @@
             // 
             menuStrip1.AllowDrop = true;
             menuStrip1.BackColor = SystemColors.ControlDark;
-            menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem, aboutToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1174, 24);
@@ -407,21 +408,28 @@
             // 
             optionsMenuItem.BackColor = SystemColors.ActiveBorder;
             optionsMenuItem.Name = "optionsMenuItem";
-            optionsMenuItem.Size = new Size(116, 22);
-            optionsMenuItem.Text = "Options";
+            optionsMenuItem.Size = new Size(180, 22);
+            optionsMenuItem.Text = "Settings";
             optionsMenuItem.Click += optionsMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.BackColor = SystemColors.ActiveBorder;
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(116, 22);
+            exitToolStripMenuItem.Size = new Size(180, 22);
             exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
             // contextMenuStrip1
             // 
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new Size(61, 4);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            aboutToolStripMenuItem.Size = new Size(52, 20);
+            aboutToolStripMenuItem.Text = "About";
             // 
             // MainPage
             // 
@@ -432,7 +440,7 @@
             ClientSize = new Size(1174, 927);
             Controls.Add(mainContainer);
             Controls.Add(menuStrip1);
-            FormBorderStyle = FormBorderStyle.None;
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MainMenuStrip = menuStrip1;
             MaximizeBox = false;
             Name = "MainPage";
@@ -491,5 +499,6 @@
         private ToolStripMenuItem optionsMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
