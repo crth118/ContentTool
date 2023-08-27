@@ -42,7 +42,7 @@ namespace ContentToolUI
         private void loadImagesButton_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            
+
             headersTFT.Visible = true;
 
             TFTimagecount = -1;
@@ -52,7 +52,7 @@ namespace ContentToolUI
             tftImageContainer.SuspendLayout();
             u2ImageContainer.SuspendLayout();
             u3ImageContainer.SuspendLayout();
-            
+
             try
             {
                 ValidateDirectories();
@@ -87,11 +87,11 @@ namespace ContentToolUI
                         break;
                 }
             }
-            
+
             DrawImageListDisplay(tft, tftImageContainer);
             DrawImageListDisplay(u2, u2ImageContainer);
             DrawImageListDisplay(u3, u3ImageContainer);
-            
+
             tftImageContainer.ResumeLayout();
             u2ImageContainer.ResumeLayout();
             u3ImageContainer.ResumeLayout();
@@ -107,9 +107,9 @@ namespace ContentToolUI
         {
             Cursor = Cursors.WaitCursor;
             ErrorMessages.Clear();
-            
+
             var filehandler = new FileHandler();
-            
+
             // Ensure workspace is empty before attempting to copy.
             // Older files can stay in the Workspace directory in some edge cases (e.g. crashes or user closing application during build)
             filehandler.CleanupWorkspace();
@@ -123,7 +123,7 @@ namespace ContentToolUI
             allPlaylists.Add(tftPlaylist);
             allPlaylists.Add(u2Playlist);
             allPlaylists.Add(u3Playlist);
-            
+
             var validation = new ValidationService();
             if (!validation.AreValidPlaylists(allPlaylists))
             {

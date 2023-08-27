@@ -407,7 +407,7 @@
             // 
             optionsMenuItem.BackColor = SystemColors.ActiveBorder;
             optionsMenuItem.Name = "optionsMenuItem";
-            optionsMenuItem.Size = new Size(180, 22);
+            optionsMenuItem.Size = new Size(116, 22);
             optionsMenuItem.Text = "Options";
             optionsMenuItem.Click += optionsMenuItem_Click;
             // 
@@ -415,7 +415,7 @@
             // 
             exitToolStripMenuItem.BackColor = SystemColors.ActiveBorder;
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(116, 22);
             exitToolStripMenuItem.Text = "Exit";
             // 
             // contextMenuStrip1
@@ -432,9 +432,11 @@
             ClientSize = new Size(1174, 927);
             Controls.Add(mainContainer);
             Controls.Add(menuStrip1);
+            FormBorderStyle = FormBorderStyle.None;
             MainMenuStrip = menuStrip1;
+            MaximizeBox = false;
             Name = "MainPage";
-            Text = "Form1";
+            Text = "MPS Content Tool";
             Load += MainPage_Load;
             mainContainer.ResumeLayout(false);
             mainContainer.PerformLayout();
