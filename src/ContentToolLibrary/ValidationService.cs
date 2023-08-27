@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using ContentToolLibrary.Models;
 
@@ -9,6 +10,8 @@ namespace ContentToolLibrary
 {
     public class ValidationService
     {
+        public List<string> ErrorMessages = new List<string>();
+        
         /// <summary>
         /// Confirms directory path exists
         /// </summary>
@@ -54,8 +57,13 @@ namespace ContentToolLibrary
 
             return DateTime.Compare(newStartDate, newStopDate);
         }
-
-        public bool ValidateAllPlaylists(List<XMLPlaylistModel.Playlist> allPlaylists)
+        
+        /// <summary>
+        /// Validates all playlists. Logs any errors to ErrorMessages list
+        /// </summary>
+        /// <param name="allPlaylists"></param>
+        /// <returns></returns>
+        public bool AreValidPlaylists(List<XMLPlaylistModel.Playlist> allPlaylists)
         {
             foreach (var playlist in allPlaylists)
             {
@@ -63,7 +71,8 @@ namespace ContentToolLibrary
                 {
                     if (!IsValidSlideDuration(entry.Duration))
                     {
-                        //errorlist
+                        var msg = $"Invalid slide duration for {entry.Path}";
+                        ErrorMessages.Add(msg);
                     }
 
                     if (entry.StartDate == null && entry.StopDate == null)
@@ -73,21 +82,27 @@ namespace ContentToolLibrary
 
                     if (!IsValidDate(entry.StartDate))
                     {
-                        //errorlist
+                        var msg = $"Invalid start date for {entry.Path}";
+                        ErrorMessages.Add(msg);
                     }
 
                     if (!IsValidDate(entry.StopDate))
                     {
-                        //errorlist
+                        var msg = $"Invalid stop date for {entry.Path}";
+                        ErrorMessages.Add(msg);
                     }
 
                     var dateCompare = CompareDates(entry.StartDate, entry.StopDate);
                     if (dateCompare == 0 || dateCompare > 0)
                     {
-                        //erroList
+                        var msg = $"{entry.StartDate} is at or equal to {entry.StopDate}." +
+                                  $"The start date must be BEFORE the stop date";
+                        ErrorMessages.Add(msg);
                     }
                 }    
             }
+
+            return ErrorMessages.Any();
         }
     }
 }

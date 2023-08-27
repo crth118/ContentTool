@@ -19,6 +19,7 @@ namespace ContentToolUI
         private readonly string DeleteImageControlName = "deleteImage";
         private readonly string CopyDurationToAllControlName = "copyDuration";
         public string CompletedBuildOutputPath;
+        public List<string> ErrorMessages { get; set; }= new();
 
         private int TFTimagecount { get; set; }
         private int U2imagecount { get; set; }
@@ -118,6 +119,22 @@ namespace ContentToolUI
             allPlaylists.Add(tftPlaylist);
             allPlaylists.Add(u2Playlist);
             allPlaylists.Add(u3Playlist);
+
+            var validate = new ValidationService();
+            var help = validate.AreValidPlaylists(allPlaylists);
+            if (!validate.AreValidPlaylists(allPlaylists))
+            {
+                ErrorMessages.AddRange(validate.ErrorMessages);
+
+                var msg = $"Could not complete build. The following errors were found:\n";
+                foreach (var message in ErrorMessages)
+                {
+                    msg += $"\n{message}";
+                }
+
+                MessageBox.Show(msg, "Oh no...", MessageBoxButtons.OK);
+                return;
+            }
 
             var contentBuider = new ContentBuilder(CompletedBuildOutputPath)
             {

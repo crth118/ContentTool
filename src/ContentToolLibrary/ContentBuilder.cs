@@ -26,9 +26,6 @@ namespace ContentToolLibrary
             allPlaylists.Add(tftplaylist);
             allPlaylists.Add(u2playlist);
             allPlaylists.Add(u3playlist);
-
-            var validate = new ValidationService();
-            validate
             
             GenerateXmlPlaylists(ContentImageType.TFT, tftplaylist, destination);
             GenerateXmlPlaylists(ContentImageType.U2, u2playlist, destination);
