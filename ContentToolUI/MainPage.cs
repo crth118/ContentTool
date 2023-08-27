@@ -19,7 +19,7 @@ namespace ContentToolUI
         private readonly string DeleteImageControlName = "deleteImage";
         private readonly string CopyDurationToAllControlName = "copyDuration";
         public string CompletedBuildOutputPath;
-        public List<string> ErrorMessages { get; set; }= new();
+        public List<string> ErrorMessages { get; set; } = new();
 
         private int TFTimagecount { get; set; }
         private int U2imagecount { get; set; }
@@ -35,7 +35,7 @@ namespace ContentToolUI
         {
             currentContentPath.Text = Config["CurrentContent"];
             newImagesPath.Text = Config["NewImages"];
-            CompletedBuildOutputPath = Config["OutputDirectory"];
+            outputPathTextBox.Text = Config["OutputDirectory"];
             SetIcons();
         }
 
@@ -106,9 +106,13 @@ namespace ContentToolUI
         private void createContentBuildButton_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-
+            ErrorMessages.Clear();
+            
             var filehandler = new FileHandler();
             
+            // Ensure workspace is empty before attempting to copy.
+            // Older files can stay in the Workspace directory in some edge cases (e.g. crashes or user closing application during build)
+            filehandler.CleanupWorkspace();
             filehandler.FormNewBuild(currentContentPath.Text, newImagesPath.Text);
 
             var tftPlaylist = CreatePlaylistModel(TFTimagecount, ContentImageType.TFT);
