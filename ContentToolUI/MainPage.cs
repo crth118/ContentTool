@@ -37,10 +37,11 @@ namespace ContentToolUI
             currentContentPath.Text = Config["CurrentContent"];
             newImagesPath.Text = Config["NewImages"];
             outputPathTextBox.Text = Config["OutputDirectory"];
+            SetIcons();
+            
             //AppliedColorScheme = Enum.Parse<ColorSchemeType>(Config["ColorScheme"]);
             //ColorScheme.ApplyColorScheme(Controls, AppliedColorScheme);
             //BackColor = ColorScheme.FormBackColor;
-            SetIcons();
         }
 
         private void loadImagesButton_Click(object sender, EventArgs e)
@@ -67,8 +68,20 @@ namespace ContentToolUI
                 Cursor = Cursors.Default;
                 return;
             }
-
+            
+            _importer.Warnings.Clear();
             var images = _importer.GetAllImages();
+            if (_importer.Warnings.Any())
+            {
+                var msg = "";
+                foreach (var warning in _importer.Warnings)
+                {
+                    msg += $"\n\n{warning}";
+                }
+
+                MessageBox.Show(msg, "Warnings", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            
             var tft = new List<ContentImage>();
             var u2 = new List<ContentImage>();
             var u3 = new List<ContentImage>();

@@ -10,9 +10,9 @@ namespace ContentToolLibrary
         private readonly string _idleAttractPlaylist = "{0}/playlist_{1}_idleAttract.xml";
         public readonly string CompletedBuildName = "CompletedBuild.zip";
         public readonly string CompletedBuildFullPath;
-        public XMLPlaylistModel.Playlist tftplaylist { get; set; }
-        public XMLPlaylistModel.Playlist u2playlist { get; set; }
-        public XMLPlaylistModel.Playlist u3playlist { get; set; }
+        public XMLPlaylistModel.Playlist? tftplaylist { get; set; }
+        public XMLPlaylistModel.Playlist? u2playlist { get; set; }
+        public XMLPlaylistModel.Playlist? u3playlist { get; set; }
 
         public ContentBuilder(string outputLocation)
         {

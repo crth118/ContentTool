@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Drawing;
+using System.Linq;
 using System.Net.Mime;
 using ImageMagick;
 
@@ -16,7 +17,11 @@ namespace ContentToolLibrary
         // Default ContentPaths
         public string CurrentContentPath { get; set; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CurrentContent/sbnexgen2");
         public string NewImagesPath { get; set; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NewImages");
+        
+        // .jpg images that are a part of every build
+        private readonly string[] _ignoreList = { "Blank_240_160.jpg", "DR_Earn_Redeem.jpg", "DR_Exp_More.jpg", "DR_Win_Prizes.jpg" };
         public Dictionary<string, int> Resolutions { get; set; }
+        public List<string> Warnings = new();
 
         public ContentImporter()
         {
@@ -48,16 +53,29 @@ namespace ContentToolLibrary
                     if (IsTFTImage(height, width))
                     {
                         imageList.Add(new ContentImage(ContentImageType.TFT, file.Name));
+                        continue;
                     }
 
                     if (IsU2Image(height, width))
                     {
                         imageList.Add(new ContentImage(ContentImageType.U2, file.Name));
+                        continue;
                     }
 
                     if (IsU3Image(height, width))
                     {
                         imageList.Add(new ContentImage(ContentImageType.U3, file.Name));
+                        continue;
+                    }
+                    
+                    if (!_ignoreList.Contains(file.Name))
+                    {
+                        var msg =
+                            $"{file.Name} does not match TFT, U2, or U3 resolutions. If this image is mean to be a " +
+                            $"part of the new content build, resize the image to the correct resolution. Otherwise, it can " +
+                            $"safely be ignored.";
+                        
+                        Warnings.Add(msg);
                     }
                 }
             }
