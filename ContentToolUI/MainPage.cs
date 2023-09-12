@@ -66,6 +66,9 @@ namespace ContentToolUI
             {
                 MessageBox.Show(ex.Message, "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Cursor = Cursors.Default;
+                Controls.Clear();
+                InitializeComponent();
+                MainPage_Load(sender, e);
                 return;
             }
             
