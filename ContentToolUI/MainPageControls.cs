@@ -93,7 +93,7 @@ namespace ContentToolUI
             
             box.MouseHover += (sender, e) =>
             {
-                var msg = "The time image will stay on screen (mm.ss)";
+                var msg = "Duration the images will stay on the content screen [mm.ss]";
                 toolTipHelper_Hover(box, msg);
             };
 

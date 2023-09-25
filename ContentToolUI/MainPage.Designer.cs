@@ -43,6 +43,7 @@
             createContentBuildButton = new Button();
             outputPathTextBox = new TextBox();
             changeOutputDirButton = new Button();
+            errorMessageLabel = new Label();
             tftImageContainer = new FlowLayoutPanel();
             tftLabel = new Label();
             headersTFT = new FlowLayoutPanel();
@@ -61,7 +62,6 @@
             optionsMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
             contextMenuStrip1 = new ContextMenuStrip(components);
-            aboutToolStripMenuItem = new ToolStripMenuItem();
             mainContainer.SuspendLayout();
             headerContainer.SuspendLayout();
             tftImageContainer.SuspendLayout();
@@ -87,6 +87,7 @@
             // 
             // headerContainer
             // 
+            headerContainer.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             headerContainer.BorderStyle = BorderStyle.FixedSingle;
             headerContainer.Controls.Add(currentContentLabel);
             headerContainer.Controls.Add(currentContentPath);
@@ -100,9 +101,12 @@
             headerContainer.Controls.Add(createContentBuildButton);
             headerContainer.Controls.Add(outputPathTextBox);
             headerContainer.Controls.Add(changeOutputDirButton);
+            headerContainer.Controls.Add(errorMessageLabel);
             headerContainer.Location = new Point(3, 3);
+            headerContainer.MaximumSize = new Size(1139, 140);
+            headerContainer.MinimumSize = new Size(1139, 114);
             headerContainer.Name = "headerContainer";
-            headerContainer.Size = new Size(1139, 114);
+            headerContainer.Size = new Size(1139, 118);
             headerContainer.TabIndex = 1;
             // 
             // currentContentLabel
@@ -250,13 +254,24 @@
             changeOutputDirButton.UseVisualStyleBackColor = true;
             changeOutputDirButton.Click += changeOutputDirButton_Click;
             // 
+            // errorMessageLabel
+            // 
+            errorMessageLabel.AutoSize = true;
+            errorMessageLabel.BackColor = SystemColors.ActiveCaptionText;
+            errorMessageLabel.ForeColor = SystemColors.ButtonFace;
+            errorMessageLabel.Location = new Point(0, 114);
+            errorMessageLabel.Margin = new Padding(0, 2, 3, 5);
+            errorMessageLabel.Name = "errorMessageLabel";
+            errorMessageLabel.Size = new Size(0, 15);
+            errorMessageLabel.TabIndex = 13;
+            // 
             // tftImageContainer
             // 
             tftImageContainer.AutoSize = true;
             tftImageContainer.BorderStyle = BorderStyle.FixedSingle;
             tftImageContainer.Controls.Add(tftLabel);
             tftImageContainer.Controls.Add(headersTFT);
-            tftImageContainer.Location = new Point(3, 123);
+            tftImageContainer.Location = new Point(3, 127);
             tftImageContainer.Margin = new Padding(3, 3, 3, 10);
             tftImageContainer.MaximumSize = new Size(1139, 0);
             tftImageContainer.MinimumSize = new Size(1139, 60);
@@ -342,7 +357,7 @@
             u2ImageContainer.AutoSize = true;
             u2ImageContainer.BorderStyle = BorderStyle.FixedSingle;
             u2ImageContainer.Controls.Add(u2Label);
-            u2ImageContainer.Location = new Point(3, 196);
+            u2ImageContainer.Location = new Point(3, 200);
             u2ImageContainer.Margin = new Padding(3, 3, 3, 10);
             u2ImageContainer.MaximumSize = new Size(1139, 0);
             u2ImageContainer.MinimumSize = new Size(1139, 60);
@@ -367,7 +382,7 @@
             u3ImageContainer.AutoSize = true;
             u3ImageContainer.BorderStyle = BorderStyle.FixedSingle;
             u3ImageContainer.Controls.Add(u3label);
-            u3ImageContainer.Location = new Point(3, 269);
+            u3ImageContainer.Location = new Point(3, 273);
             u3ImageContainer.MaximumSize = new Size(1139, 0);
             u3ImageContainer.MinimumSize = new Size(1139, 60);
             u3ImageContainer.Name = "u3ImageContainer";
@@ -390,7 +405,7 @@
             // 
             menuStrip1.AllowDrop = true;
             menuStrip1.BackColor = SystemColors.ControlDark;
-            menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem, aboutToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1174, 24);
@@ -408,7 +423,7 @@
             // 
             optionsMenuItem.BackColor = SystemColors.ActiveBorder;
             optionsMenuItem.Name = "optionsMenuItem";
-            optionsMenuItem.Size = new Size(180, 22);
+            optionsMenuItem.Size = new Size(116, 22);
             optionsMenuItem.Text = "Settings";
             optionsMenuItem.Click += optionsMenuItem_Click;
             // 
@@ -416,7 +431,7 @@
             // 
             exitToolStripMenuItem.BackColor = SystemColors.ActiveBorder;
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(116, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -424,12 +439,6 @@
             // 
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new Size(61, 4);
-            // 
-            // aboutToolStripMenuItem
-            // 
-            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            aboutToolStripMenuItem.Size = new Size(52, 20);
-            aboutToolStripMenuItem.Text = "About";
             // 
             // MainPage
             // 
@@ -499,6 +508,6 @@
         private ToolStripMenuItem optionsMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip1;
-        private ToolStripMenuItem aboutToolStripMenuItem;
+        private Label errorMessageLabel;
     }
 }

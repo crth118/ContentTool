@@ -1,4 +1,6 @@
-﻿namespace ContentToolUI
+﻿using System.Windows.Forms.VisualStyles;
+
+namespace ContentToolUI
 {
     public partial class MainPage : Form
     {
@@ -51,16 +53,22 @@
         private void currentContentPath_TextChange(object sender, EventArgs e)
         {
             _importer.CurrentContentPath = currentContentPath.Text;
+            SetDirectoryPathTextBoxColor(currentContentPath);
+            SetLoadImagesButton();
         }
 
         private void newImagesPath_TextChange(object sender, EventArgs e)
         {
             _importer.NewImagesPath = newImagesPath.Text;
+            SetDirectoryPathTextBoxColor(newImagesPath);
+            SetLoadImagesButton();
         }
 
         private void outputPathTextBox_TextChange(object sender, EventArgs e)
         {
             CompletedBuildOutputPath = outputPathTextBox.Text;
+            SetDirectoryPathTextBoxColor(outputPathTextBox);
+            SetLoadImagesButton();
         }
 
         private void toolTipHelper_Hover(Control box, string message)

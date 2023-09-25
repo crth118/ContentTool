@@ -38,10 +38,7 @@ namespace ContentToolUI
             newImagesPath.Text = Config["NewImages"];
             outputPathTextBox.Text = Config["OutputDirectory"];
             SetIcons();
-            
-            //AppliedColorScheme = Enum.Parse<ColorSchemeType>(Config["ColorScheme"]);
-            //ColorScheme.ApplyColorScheme(Controls, AppliedColorScheme);
-            //BackColor = ColorScheme.FormBackColor;
+            SetLoadImagesButton();
         }
 
         private void loadImagesButton_Click(object sender, EventArgs e)
@@ -71,7 +68,7 @@ namespace ContentToolUI
                 MainPage_Load(sender, e);
                 return;
             }
-            
+
             _importer.Warnings.Clear();
             var images = _importer.GetAllImages();
             if (_importer.Warnings.Any())
@@ -84,7 +81,7 @@ namespace ContentToolUI
 
                 MessageBox.Show(msg, "Warnings", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-            
+
             var tft = new List<ContentImage>();
             var u2 = new List<ContentImage>();
             var u3 = new List<ContentImage>();
@@ -227,16 +224,16 @@ namespace ContentToolUI
                 if (useDates.Checked)
                 {
                     var schedule = new List<XMLPlaylistModel.Playlist.PlaylistContent.PlaylistSchedule>();
-                    
+
                     var startDate = Controls.Find($"{imageType}{ImageStartDateControlName}{i}", true).First().Text;
-                    var stopDate  = Controls.Find($"{imageType}{ImageStopDateControlName}{i}", true).First().Text;
+                    var stopDate = Controls.Find($"{imageType}{ImageStopDateControlName}{i}", true).First().Text;
 
                     var scheduleEntry = new XMLPlaylistModel.Playlist.PlaylistContent.PlaylistSchedule()
                     {
                         StartDate = startDate,
                         StopDate = stopDate
                     };
-                    
+
                     schedule.Add(scheduleEntry);
 
                     xmlEntry.Schedule = schedule;

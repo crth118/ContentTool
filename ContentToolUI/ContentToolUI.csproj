@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NewImages\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="icons\copy-document.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
