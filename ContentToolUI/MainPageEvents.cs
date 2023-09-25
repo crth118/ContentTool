@@ -87,8 +87,8 @@ namespace ContentToolUI
                 toolTip1.SetToolTip(box, $"Valid format: yyyy-MM-dd");
             }
         }
-        
-        private void optionsMenuItem_Click(object sender, EventArgs e)
+
+        private void settingsMenuItem_Click(object sender, EventArgs e)
         {
             var options = new OptionsPage(Config);
             options.Show();

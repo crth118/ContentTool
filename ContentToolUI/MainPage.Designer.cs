@@ -58,10 +58,8 @@
             u3label = new Label();
             toolTip1 = new ToolTip(components);
             menuStrip1 = new MenuStrip();
-            optionsToolStripMenuItem = new ToolStripMenuItem();
-            optionsMenuItem = new ToolStripMenuItem();
-            exitToolStripMenuItem = new ToolStripMenuItem();
             contextMenuStrip1 = new ContextMenuStrip(components);
+            settingsMenuItem = new ToolStripMenuItem();
             mainContainer.SuspendLayout();
             headerContainer.SuspendLayout();
             tftImageContainer.SuspendLayout();
@@ -405,40 +403,24 @@
             // 
             menuStrip1.AllowDrop = true;
             menuStrip1.BackColor = SystemColors.ControlDark;
-            menuStrip1.Items.AddRange(new ToolStripItem[] { optionsToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { settingsMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1174, 24);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
-            // optionsToolStripMenuItem
-            // 
-            optionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { optionsMenuItem, exitToolStripMenuItem });
-            optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            optionsToolStripMenuItem.Size = new Size(37, 20);
-            optionsToolStripMenuItem.Text = "File";
-            // 
-            // optionsMenuItem
-            // 
-            optionsMenuItem.BackColor = SystemColors.ActiveBorder;
-            optionsMenuItem.Name = "optionsMenuItem";
-            optionsMenuItem.Size = new Size(116, 22);
-            optionsMenuItem.Text = "Settings";
-            optionsMenuItem.Click += optionsMenuItem_Click;
-            // 
-            // exitToolStripMenuItem
-            // 
-            exitToolStripMenuItem.BackColor = SystemColors.ActiveBorder;
-            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(116, 22);
-            exitToolStripMenuItem.Text = "Exit";
-            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
-            // 
             // contextMenuStrip1
             // 
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new Size(61, 4);
+            // 
+            // settingsMenuItem
+            // 
+            settingsMenuItem.Name = "settingsMenuItem";
+            settingsMenuItem.Size = new Size(61, 20);
+            settingsMenuItem.Text = "Settings";
+            settingsMenuItem.Click += settingsMenuItem_Click;
             // 
             // MainPage
             // 
@@ -504,10 +486,8 @@
         private Label outputPathLabel;
         private Button changeOutputDirButton;
         private MenuStrip menuStrip1;
-        private ToolStripMenuItem optionsToolStripMenuItem;
-        private ToolStripMenuItem optionsMenuItem;
-        private ToolStripMenuItem exitToolStripMenuItem;
         private ContextMenuStrip contextMenuStrip1;
         private Label errorMessageLabel;
+        private ToolStripMenuItem settingsMenuItem;
     }
 }

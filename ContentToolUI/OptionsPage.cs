@@ -18,6 +18,7 @@ namespace ContentToolUI
             OutputPath = Config["OutputDirectory"];
             CurrentContentPath = Config["CurrentContent"];
             NewImagesPath = Config["NewImages"];
+            SetIcons();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -86,6 +87,23 @@ namespace ContentToolUI
         private void cancelButton_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void SetIcons()
+        {
+            changeCurrentContentDirButton.Image = Image.FromFile(".\\icons\\folder-search.png")
+                .GetThumbnailImage(15, 15, null, IntPtr.Zero);
+            changeCurrentContentDirButton.ImageAlign = ContentAlignment.MiddleCenter;
+
+
+            changeNewImagesFolderButton.Image = Image.FromFile(".\\icons\\folder-search.png")
+                .GetThumbnailImage(15, 15, null, IntPtr.Zero);
+            changeNewImagesFolderButton.ImageAlign = ContentAlignment.MiddleCenter;
+
+
+            changeOutputFolderButton.Image = Image.FromFile(".\\icons\\folder-search.png")
+                .GetThumbnailImage(15, 15, null, IntPtr.Zero);
+            changeOutputFolderButton.ImageAlign = ContentAlignment.MiddleCenter;
         }
     }
 }
