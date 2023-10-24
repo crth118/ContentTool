@@ -58,8 +58,8 @@
             u3label = new Label();
             toolTip1 = new ToolTip(components);
             menuStrip1 = new MenuStrip();
-            contextMenuStrip1 = new ContextMenuStrip(components);
             settingsMenuItem = new ToolStripMenuItem();
+            contextMenuStrip1 = new ContextMenuStrip(components);
             mainContainer.SuspendLayout();
             headerContainer.SuspendLayout();
             tftImageContainer.SuspendLayout();
@@ -202,7 +202,6 @@
             // refreshButton
             // 
             refreshButton.Cursor = Cursors.Hand;
-            refreshButton.Enabled = false;
             refreshButton.FlatAppearance.BorderColor = Color.Black;
             refreshButton.Location = new Point(128, 81);
             refreshButton.Margin = new Padding(3, 0, 3, 3);
@@ -410,17 +409,17 @@
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
-            // contextMenuStrip1
-            // 
-            contextMenuStrip1.Name = "contextMenuStrip1";
-            contextMenuStrip1.Size = new Size(61, 4);
-            // 
             // settingsMenuItem
             // 
             settingsMenuItem.Name = "settingsMenuItem";
             settingsMenuItem.Size = new Size(61, 20);
             settingsMenuItem.Text = "Settings";
             settingsMenuItem.Click += settingsMenuItem_Click;
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(61, 4);
             // 
             // MainPage
             // 

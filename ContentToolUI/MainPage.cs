@@ -38,6 +38,9 @@ namespace ContentToolUI
             newImagesPath.Text = Config["NewImages"];
             outputPathTextBox.Text = Config["OutputDirectory"];
             SetIcons();
+            SetDirectoryPathTextBoxColor(currentContentPath);
+            SetDirectoryPathTextBoxColor(newImagesPath);
+            SetDirectoryPathTextBoxColor(outputPathTextBox);
             SetLoadImagesButton();
         }
 

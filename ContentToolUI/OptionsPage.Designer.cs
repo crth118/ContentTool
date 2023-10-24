@@ -220,7 +220,7 @@
             ClientSize = new Size(649, 343);
             Controls.Add(optionsPageContainer);
             Name = "OptionsPage";
-            Text = "Form1";
+            Text = "MPS Content Tool - Settings";
             Load += Form1_Load;
             optionsPageContainer.ResumeLayout(false);
             optionsPageContainer.PerformLayout();

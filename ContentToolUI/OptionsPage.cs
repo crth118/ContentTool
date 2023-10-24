@@ -73,7 +73,7 @@ namespace ContentToolUI
                 var settingsFile = $"{AppDomain.CurrentDomain.BaseDirectory}\\settings.json";
                 JsonSerializationService.WriteToJsonFile(settingsFile, settings, false);
 
-                MessageBox.Show("User settings saved. Refresh main window for changes to take effect.", "Informational Message", MessageBoxButtons.OK);
+                MessageBox.Show("User settings saved. Restart application for changes to take effect.", "Informational Message", MessageBoxButtons.OK);
             }
             catch (Exception ex)
             {
